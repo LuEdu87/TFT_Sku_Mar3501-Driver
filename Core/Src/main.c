@@ -166,7 +166,7 @@ int main(void)
 
 		Almacen = 0;
 		LCD_SD_FileOpen(&hsd, FileSD[i]);
-		while(Almacen<6)
+		while(Almacen==0)
 		{
 			Almacen=LCD_Touch_CoorX(&htch);
 		}

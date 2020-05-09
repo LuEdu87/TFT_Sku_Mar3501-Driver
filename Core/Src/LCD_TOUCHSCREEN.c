@@ -69,7 +69,17 @@ static void LCD_Touch_ADCSwConfig(LCD_Touchscreen_it *hLCD)
 		Error_Handler();
 	}
 
-
+	/*
+	 * COnfiguración del watchdog analógico para evitar el ruido del ADC.
+	 */
+	hLCD->hawdg.LowThreshold = 100;
+	hLCD->hawdg.Channel = ADC_CHANNEL_4;
+	hLCD->hawdg.WatchdogMode = ADC_ANALOGWATCHDOG_SINGLE_REG;
+	hLCD->hawdg.ITMode = DISABLE;
+	if(HAL_ADC_AnalogWDGConfig(&hLCD->hadc1, &hLCD->hawdg)!=HAL_OK)
+	{
+		Error_Handler();
+	}
 }
 
 
@@ -306,7 +316,11 @@ uint32_t LCD_Touch_ReadX(LCD_Touchscreen_it *hLCD)
 	uint32_t ReadValue=0;
 	LCD_Touch_PinsConf(*hLCD,CoorX);
 	hLCD->sConfig.Channel = ADC_CHANNEL_4;
-	HAL_ADC_ConfigChannel(&hLCD->hadc1, & hLCD->sConfig);
+	hLCD->hawdg.Channel = ADC_CHANNEL_4;
+	HAL_ADC_ConfigChannel(&hLCD->hadc1, &hLCD->sConfig);
+	HAL_ADC_AnalogWDGConfig(&hLCD->hadc1, &hLCD->hawdg);
+
+
 
 
 	for(int i=0;i<20;i++)
@@ -334,7 +348,9 @@ uint32_t LCD_Touch_ReadY(LCD_Touchscreen_it *hLCD)
 	uint32_t ReadValue=0;
 	LCD_Touch_PinsConf(*hLCD,CoorY);
 	hLCD->sConfig.Channel = ADC_CHANNEL_8;
+	hLCD->hawdg.Channel = ADC_CHANNEL_8;
 	HAL_ADC_ConfigChannel(&hLCD->hadc1, & hLCD->sConfig);
+	HAL_ADC_AnalogWDGConfig(&hLCD->hadc1, &hLCD->hawdg);
 
 
 	for(int i=0;i<20;i++)
