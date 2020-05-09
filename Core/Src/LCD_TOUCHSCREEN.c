@@ -66,8 +66,10 @@ static void LCD_Touch_ADCSwConfig(LCD_Touchscreen_it *hLCD)
 	hLCD->sConfig.SamplingTime = ADC_SAMPLETIME_3CYCLES;
 	if (HAL_ADC_ConfigChannel(&hLCD->hadc1, & hLCD->sConfig) != HAL_OK)
 	{
-	Error_Handler();
+		Error_Handler();
 	}
+
+
 }
 
 

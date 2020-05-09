@@ -21,29 +21,29 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, ALLOC, LOAD, DATA
   8 .data         00000034  20000000  08004714  00020000  2**2
                   CONTENTS, ALLOC, LOAD, DATA
-  9 .bss          00000340  20000034  08004748  00020034  2**2
+  9 .bss          00000358  20000034  08004748  00020034  2**2
                   ALLOC
- 10 ._user_heap_stack 00000604  20000374  08004748  00020374  2**0
+ 10 ._user_heap_stack 00000604  2000038c  08004748  0002038c  2**0
                   ALLOC
  11 .ARM.attributes 00000030  00000000  00000000  00020034  2**0
                   CONTENTS, READONLY
- 12 .debug_info   0000bb6a  00000000  00000000  00020064  2**0
+ 12 .debug_info   0000bc3a  00000000  00000000  00020064  2**0
                   CONTENTS, READONLY, DEBUGGING
- 13 .debug_abbrev 00001d50  00000000  00000000  0002bbce  2**0
+ 13 .debug_abbrev 00001d50  00000000  00000000  0002bc9e  2**0
                   CONTENTS, READONLY, DEBUGGING
- 14 .debug_aranges 000008f8  00000000  00000000  0002d920  2**3
+ 14 .debug_aranges 000008f8  00000000  00000000  0002d9f0  2**3
                   CONTENTS, READONLY, DEBUGGING
- 15 .debug_ranges 00000810  00000000  00000000  0002e218  2**3
+ 15 .debug_ranges 00000810  00000000  00000000  0002e2e8  2**3
                   CONTENTS, READONLY, DEBUGGING
- 16 .debug_macro  000215bf  00000000  00000000  0002ea28  2**0
+ 16 .debug_macro  000215bf  00000000  00000000  0002eaf8  2**0
                   CONTENTS, READONLY, DEBUGGING
- 17 .debug_line   00008c2a  00000000  00000000  0004ffe7  2**0
+ 17 .debug_line   00008c2a  00000000  00000000  000500b7  2**0
                   CONTENTS, READONLY, DEBUGGING
- 18 .debug_str    000cccc1  00000000  00000000  00058c11  2**0
+ 18 .debug_str    000cccc7  00000000  00000000  00058ce1  2**0
                   CONTENTS, READONLY, DEBUGGING
- 19 .comment      0000007b  00000000  00000000  001258d2  2**0
+ 19 .comment      0000007b  00000000  00000000  001259a8  2**0
                   CONTENTS, READONLY
- 20 .debug_frame  000023ec  00000000  00000000  00125950  2**2
+ 20 .debug_frame  000023ec  00000000  00000000  00125a24  2**2
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -3357,9 +3357,11 @@ static void LCD_Touch_ADCSwConfig(LCD_Touchscreen_it *hLCD)
  8001898:	2b00      	cmp	r3, #0
  800189a:	d001      	beq.n	80018a0 <LCD_Touch_ADCSwConfig+0x9c>
 	{
-	Error_Handler();
+		Error_Handler();
  800189c:	f000 fd20 	bl	80022e0 <Error_Handler>
 	}
+
+
 }
  80018a0:	bf00      	nop
  80018a2:	3708      	adds	r7, #8
@@ -3482,7 +3484,7 @@ static void LCD_Touch_PinsConf(LCD_Touchscreen_it hLCD,uint8_t XoY)
  800195c:	f001 fc66 	bl	800322c <HAL_GPIO_WritePin>
 
 	if(XoY==CoorX)
- 8001960:	f897 3098 	ldrb.w	r3, [r7, #152]	; 0x98
+ 8001960:	f897 30b0 	ldrb.w	r3, [r7, #176]	; 0xb0
  8001964:	2b01      	cmp	r3, #1
  8001966:	d133      	bne.n	80019d0 <LCD_Touch_PinsConf+0x9c>
 	{
@@ -3561,7 +3563,7 @@ static void LCD_Touch_PinsConf(LCD_Touchscreen_it hLCD,uint8_t XoY)
 }
  80019ce:	e037      	b.n	8001a40 <LCD_Touch_PinsConf+0x10c>
 	}else if(XoY==CoorY)
- 80019d0:	f897 3098 	ldrb.w	r3, [r7, #152]	; 0x98
+ 80019d0:	f897 30b0 	ldrb.w	r3, [r7, #176]	; 0xb0
  80019d4:	2b02      	cmp	r3, #2
  80019d6:	d133      	bne.n	8001a40 <LCD_Touch_PinsConf+0x10c>
 		hLCD.hLCD_GPIOx.Pull = GPIO_PULLDOWN;
@@ -3790,14 +3792,14 @@ void LCD_Touch_Calibration(LCD_Touchscreen_it *hLCD)
  8001b4c:	4603      	mov	r3, r0
  8001b4e:	b29a      	uxth	r2, r3
  8001b50:	687b      	ldr	r3, [r7, #4]
- 8001b52:	f8a3 2084 	strh.w	r2, [r3, #132]	; 0x84
+ 8001b52:	f8a3 209c 	strh.w	r2, [r3, #156]	; 0x9c
 		hLCD->ADC_Y0 = LCD_Touch_ReadY(hLCD);
  8001b56:	6878      	ldr	r0, [r7, #4]
  8001b58:	f000 fa2a 	bl	8001fb0 <LCD_Touch_ReadY>
  8001b5c:	4603      	mov	r3, r0
  8001b5e:	b29a      	uxth	r2, r3
  8001b60:	687b      	ldr	r3, [r7, #4]
- 8001b62:	f8a3 208a 	strh.w	r2, [r3, #138]	; 0x8a
+ 8001b62:	f8a3 20a2 	strh.w	r2, [r3, #162]	; 0xa2
 		HAL_Delay(100);
  8001b66:	2064      	movs	r0, #100	; 0x64
  8001b68:	f000 fcca 	bl	8002500 <HAL_Delay>
@@ -3837,14 +3839,14 @@ void LCD_Touch_Calibration(LCD_Touchscreen_it *hLCD)
  8001ba2:	4603      	mov	r3, r0
  8001ba4:	b29a      	uxth	r2, r3
  8001ba6:	687b      	ldr	r3, [r7, #4]
- 8001ba8:	f8a3 2086 	strh.w	r2, [r3, #134]	; 0x86
+ 8001ba8:	f8a3 209e 	strh.w	r2, [r3, #158]	; 0x9e
 		hLCD->ADC_Y1 = LCD_Touch_ReadY(hLCD);
  8001bac:	6878      	ldr	r0, [r7, #4]
  8001bae:	f000 f9ff 	bl	8001fb0 <LCD_Touch_ReadY>
  8001bb2:	4603      	mov	r3, r0
  8001bb4:	b29a      	uxth	r2, r3
  8001bb6:	687b      	ldr	r3, [r7, #4]
- 8001bb8:	f8a3 208c 	strh.w	r2, [r3, #140]	; 0x8c
+ 8001bb8:	f8a3 20a4 	strh.w	r2, [r3, #164]	; 0xa4
 		HAL_Delay(500);
  8001bbc:	f44f 70fa 	mov.w	r0, #500	; 0x1f4
  8001bc0:	f000 fc9e 	bl	8002500 <HAL_Delay>
@@ -3882,14 +3884,14 @@ void LCD_Touch_Calibration(LCD_Touchscreen_it *hLCD)
  8001bfa:	4603      	mov	r3, r0
  8001bfc:	b29a      	uxth	r2, r3
  8001bfe:	687b      	ldr	r3, [r7, #4]
- 8001c00:	f8a3 2088 	strh.w	r2, [r3, #136]	; 0x88
+ 8001c00:	f8a3 20a0 	strh.w	r2, [r3, #160]	; 0xa0
 		hLCD->ADC_Y2 = LCD_Touch_ReadY(hLCD);
  8001c04:	6878      	ldr	r0, [r7, #4]
  8001c06:	f000 f9d3 	bl	8001fb0 <LCD_Touch_ReadY>
  8001c0a:	4603      	mov	r3, r0
  8001c0c:	b29a      	uxth	r2, r3
  8001c0e:	687b      	ldr	r3, [r7, #4]
- 8001c10:	f8a3 208e 	strh.w	r2, [r3, #142]	; 0x8e
+ 8001c10:	f8a3 20a6 	strh.w	r2, [r3, #166]	; 0xa6
 		HAL_Delay(500);
  8001c14:	f44f 70fa 	mov.w	r0, #500	; 0x1f4
  8001c18:	f000 fc72 	bl	8002500 <HAL_Delay>
@@ -3909,29 +3911,29 @@ void LCD_Touch_Calibration(LCD_Touchscreen_it *hLCD)
 
 	K=((hLCD->ADC_X0-hLCD->ADC_X2)*(hLCD->ADC_Y1-hLCD->ADC_Y2))-((hLCD->ADC_X1-hLCD->ADC_X2)*(hLCD->ADC_Y0-hLCD->ADC_Y2));
  8001c30:	687b      	ldr	r3, [r7, #4]
- 8001c32:	f8b3 3084 	ldrh.w	r3, [r3, #132]	; 0x84
+ 8001c32:	f8b3 309c 	ldrh.w	r3, [r3, #156]	; 0x9c
  8001c36:	461a      	mov	r2, r3
  8001c38:	687b      	ldr	r3, [r7, #4]
- 8001c3a:	f8b3 3088 	ldrh.w	r3, [r3, #136]	; 0x88
+ 8001c3a:	f8b3 30a0 	ldrh.w	r3, [r3, #160]	; 0xa0
  8001c3e:	1ad3      	subs	r3, r2, r3
  8001c40:	687a      	ldr	r2, [r7, #4]
- 8001c42:	f8b2 208c 	ldrh.w	r2, [r2, #140]	; 0x8c
+ 8001c42:	f8b2 20a4 	ldrh.w	r2, [r2, #164]	; 0xa4
  8001c46:	4611      	mov	r1, r2
  8001c48:	687a      	ldr	r2, [r7, #4]
- 8001c4a:	f8b2 208e 	ldrh.w	r2, [r2, #142]	; 0x8e
+ 8001c4a:	f8b2 20a6 	ldrh.w	r2, [r2, #166]	; 0xa6
  8001c4e:	1a8a      	subs	r2, r1, r2
  8001c50:	fb02 f203 	mul.w	r2, r2, r3
  8001c54:	687b      	ldr	r3, [r7, #4]
- 8001c56:	f8b3 3086 	ldrh.w	r3, [r3, #134]	; 0x86
+ 8001c56:	f8b3 309e 	ldrh.w	r3, [r3, #158]	; 0x9e
  8001c5a:	4619      	mov	r1, r3
  8001c5c:	687b      	ldr	r3, [r7, #4]
- 8001c5e:	f8b3 3088 	ldrh.w	r3, [r3, #136]	; 0x88
+ 8001c5e:	f8b3 30a0 	ldrh.w	r3, [r3, #160]	; 0xa0
  8001c62:	1acb      	subs	r3, r1, r3
  8001c64:	6879      	ldr	r1, [r7, #4]
- 8001c66:	f8b1 108a 	ldrh.w	r1, [r1, #138]	; 0x8a
+ 8001c66:	f8b1 10a2 	ldrh.w	r1, [r1, #162]	; 0xa2
  8001c6a:	4608      	mov	r0, r1
  8001c6c:	6879      	ldr	r1, [r7, #4]
- 8001c6e:	f8b1 108e 	ldrh.w	r1, [r1, #142]	; 0x8e
+ 8001c6e:	f8b1 10a6 	ldrh.w	r1, [r1, #166]	; 0xa6
  8001c72:	1a41      	subs	r1, r0, r1
  8001c74:	fb01 f303 	mul.w	r3, r1, r3
  8001c78:	1ad3      	subs	r3, r2, r3
@@ -3941,7 +3943,7 @@ void LCD_Touch_Calibration(LCD_Touchscreen_it *hLCD)
 
 	hLCD->A =((hLCD->ADC_Y0*(Calib_X2-Calib_X1))+(hLCD->ADC_Y1*(Calib_X0-Calib_X2))+(hLCD->ADC_Y2*(Calib_X1-Calib_X0)))/K;
  8001c86:	687b      	ldr	r3, [r7, #4]
- 8001c88:	f8b3 308a 	ldrh.w	r3, [r3, #138]	; 0x8a
+ 8001c88:	f8b3 30a2 	ldrh.w	r3, [r3, #162]	; 0xa2
  8001c8c:	461a      	mov	r2, r3
  8001c8e:	4613      	mov	r3, r2
  8001c90:	00db      	lsls	r3, r3, #3
@@ -3949,13 +3951,13 @@ void LCD_Touch_Calibration(LCD_Touchscreen_it *hLCD)
  8001c94:	011b      	lsls	r3, r3, #4
  8001c96:	461a      	mov	r2, r3
  8001c98:	687b      	ldr	r3, [r7, #4]
- 8001c9a:	f8b3 308c 	ldrh.w	r3, [r3, #140]	; 0x8c
+ 8001c9a:	f8b3 30a4 	ldrh.w	r3, [r3, #164]	; 0xa4
  8001c9e:	4619      	mov	r1, r3
  8001ca0:	4b90      	ldr	r3, [pc, #576]	; (8001ee4 <LCD_Touch_Calibration+0x3cc>)
  8001ca2:	fb03 f301 	mul.w	r3, r3, r1
  8001ca6:	441a      	add	r2, r3
  8001ca8:	687b      	ldr	r3, [r7, #4]
- 8001caa:	f8b3 308e 	ldrh.w	r3, [r3, #142]	; 0x8e
+ 8001caa:	f8b3 30a6 	ldrh.w	r3, [r3, #166]	; 0xa6
  8001cae:	4619      	mov	r1, r3
  8001cb0:	23be      	movs	r3, #190	; 0xbe
  8001cb2:	fb03 f301 	mul.w	r3, r3, r1
@@ -3965,22 +3967,22 @@ void LCD_Touch_Calibration(LCD_Touchscreen_it *hLCD)
  8001cc0:	ed97 7a03 	vldr	s14, [r7, #12]
  8001cc4:	eec6 7a87 	vdiv.f32	s15, s13, s14
  8001cc8:	687b      	ldr	r3, [r7, #4]
- 8001cca:	edc3 7a1b 	vstr	s15, [r3, #108]	; 0x6c
+ 8001cca:	edc3 7a21 	vstr	s15, [r3, #132]	; 0x84
 
 	hLCD->B = ((hLCD->ADC_X0*(Calib_X1-Calib_X2))+(hLCD->ADC_X1*(Calib_X2-Calib_X0))+(hLCD->ADC_X2*(Calib_X0-Calib_X1)))/K;
  8001cce:	687b      	ldr	r3, [r7, #4]
- 8001cd0:	f8b3 3084 	ldrh.w	r3, [r3, #132]	; 0x84
+ 8001cd0:	f8b3 309c 	ldrh.w	r3, [r3, #156]	; 0x9c
  8001cd4:	461a      	mov	r2, r3
  8001cd6:	f06f 038f 	mvn.w	r3, #143	; 0x8f
  8001cda:	fb03 f202 	mul.w	r2, r3, r2
  8001cde:	687b      	ldr	r3, [r7, #4]
- 8001ce0:	f8b3 3086 	ldrh.w	r3, [r3, #134]	; 0x86
+ 8001ce0:	f8b3 309e 	ldrh.w	r3, [r3, #158]	; 0x9e
  8001ce4:	4619      	mov	r1, r3
  8001ce6:	f44f 73a7 	mov.w	r3, #334	; 0x14e
  8001cea:	fb03 f301 	mul.w	r3, r3, r1
  8001cee:	441a      	add	r2, r3
  8001cf0:	687b      	ldr	r3, [r7, #4]
- 8001cf2:	f8b3 3088 	ldrh.w	r3, [r3, #136]	; 0x88
+ 8001cf2:	f8b3 30a0 	ldrh.w	r3, [r3, #160]	; 0xa0
  8001cf6:	4619      	mov	r1, r3
  8001cf8:	f06f 03bd 	mvn.w	r3, #189	; 0xbd
  8001cfc:	fb03 f301 	mul.w	r3, r3, r1
@@ -3990,14 +3992,14 @@ void LCD_Touch_Calibration(LCD_Touchscreen_it *hLCD)
  8001d0a:	ed97 7a03 	vldr	s14, [r7, #12]
  8001d0e:	eec6 7a87 	vdiv.f32	s15, s13, s14
  8001d12:	687b      	ldr	r3, [r7, #4]
- 8001d14:	edc3 7a1c 	vstr	s15, [r3, #112]	; 0x70
+ 8001d14:	edc3 7a22 	vstr	s15, [r3, #136]	; 0x88
 
 	hLCD->C = ((hLCD->ADC_Y1*((hLCD->ADC_X0*Calib_X2)-(hLCD->ADC_X2*Calib_X0)))+(hLCD->ADC_Y2*((hLCD->ADC_X1*Calib_X0)-(hLCD->ADC_X0*Calib_X1)))+(hLCD->ADC_Y0*((hLCD->ADC_X2*Calib_X1)-(hLCD->ADC_X1*Calib_X2))))/K;
  8001d18:	687b      	ldr	r3, [r7, #4]
- 8001d1a:	f8b3 308c 	ldrh.w	r3, [r3, #140]	; 0x8c
+ 8001d1a:	f8b3 30a4 	ldrh.w	r3, [r3, #164]	; 0xa4
  8001d1e:	4619      	mov	r1, r3
  8001d20:	687b      	ldr	r3, [r7, #4]
- 8001d22:	f8b3 3084 	ldrh.w	r3, [r3, #132]	; 0x84
+ 8001d22:	f8b3 309c 	ldrh.w	r3, [r3, #156]	; 0x9c
  8001d26:	461a      	mov	r2, r3
  8001d28:	4613      	mov	r3, r2
  8001d2a:	005b      	lsls	r3, r3, #1
@@ -4005,22 +4007,22 @@ void LCD_Touch_Calibration(LCD_Touchscreen_it *hLCD)
  8001d2e:	01db      	lsls	r3, r3, #7
  8001d30:	461a      	mov	r2, r3
  8001d32:	687b      	ldr	r3, [r7, #4]
- 8001d34:	f8b3 3088 	ldrh.w	r3, [r3, #136]	; 0x88
+ 8001d34:	f8b3 30a0 	ldrh.w	r3, [r3, #160]	; 0xa0
  8001d38:	4618      	mov	r0, r3
  8001d3a:	f06f 0331 	mvn.w	r3, #49	; 0x31
  8001d3e:	fb03 f300 	mul.w	r3, r3, r0
  8001d42:	4413      	add	r3, r2
  8001d44:	fb03 f201 	mul.w	r2, r3, r1
  8001d48:	687b      	ldr	r3, [r7, #4]
- 8001d4a:	f8b3 308e 	ldrh.w	r3, [r3, #142]	; 0x8e
+ 8001d4a:	f8b3 30a6 	ldrh.w	r3, [r3, #166]	; 0xa6
  8001d4e:	461c      	mov	r4, r3
  8001d50:	687b      	ldr	r3, [r7, #4]
- 8001d52:	f8b3 3086 	ldrh.w	r3, [r3, #134]	; 0x86
+ 8001d52:	f8b3 309e 	ldrh.w	r3, [r3, #158]	; 0x9e
  8001d56:	4619      	mov	r1, r3
  8001d58:	2332      	movs	r3, #50	; 0x32
  8001d5a:	fb03 f101 	mul.w	r1, r3, r1
  8001d5e:	687b      	ldr	r3, [r7, #4]
- 8001d60:	f8b3 3084 	ldrh.w	r3, [r3, #132]	; 0x84
+ 8001d60:	f8b3 309c 	ldrh.w	r3, [r3, #156]	; 0x9c
  8001d64:	4618      	mov	r0, r3
  8001d66:	4603      	mov	r3, r0
  8001d68:	0100      	lsls	r0, r0, #4
@@ -4030,10 +4032,10 @@ void LCD_Touch_Calibration(LCD_Touchscreen_it *hLCD)
  8001d70:	fb03 f304 	mul.w	r3, r3, r4
  8001d74:	441a      	add	r2, r3
  8001d76:	687b      	ldr	r3, [r7, #4]
- 8001d78:	f8b3 308a 	ldrh.w	r3, [r3, #138]	; 0x8a
+ 8001d78:	f8b3 30a2 	ldrh.w	r3, [r3, #162]	; 0xa2
  8001d7c:	4618      	mov	r0, r3
  8001d7e:	687b      	ldr	r3, [r7, #4]
- 8001d80:	f8b3 3088 	ldrh.w	r3, [r3, #136]	; 0x88
+ 8001d80:	f8b3 30a0 	ldrh.w	r3, [r3, #160]	; 0xa0
  8001d84:	4619      	mov	r1, r3
  8001d86:	460b      	mov	r3, r1
  8001d88:	011b      	lsls	r3, r3, #4
@@ -4041,7 +4043,7 @@ void LCD_Touch_Calibration(LCD_Touchscreen_it *hLCD)
  8001d8c:	011b      	lsls	r3, r3, #4
  8001d8e:	461c      	mov	r4, r3
  8001d90:	687b      	ldr	r3, [r7, #4]
- 8001d92:	f8b3 3086 	ldrh.w	r3, [r3, #134]	; 0x86
+ 8001d92:	f8b3 309e 	ldrh.w	r3, [r3, #158]	; 0x9e
  8001d96:	4619      	mov	r1, r3
  8001d98:	460b      	mov	r3, r1
  8001d9a:	0089      	lsls	r1, r1, #2
@@ -4055,22 +4057,22 @@ void LCD_Touch_Calibration(LCD_Touchscreen_it *hLCD)
  8001db0:	ed97 7a03 	vldr	s14, [r7, #12]
  8001db4:	eec6 7a87 	vdiv.f32	s15, s13, s14
  8001db8:	687b      	ldr	r3, [r7, #4]
- 8001dba:	edc3 7a1d 	vstr	s15, [r3, #116]	; 0x74
+ 8001dba:	edc3 7a23 	vstr	s15, [r3, #140]	; 0x8c
 
 	hLCD->D = ((hLCD->ADC_Y0*(Calib_Y2-Calib_Y1))+(hLCD->ADC_Y1*(Calib_Y0-Calib_Y2))+(hLCD->ADC_Y2*(Calib_Y1-Calib_Y0)))/K;
  8001dbe:	687b      	ldr	r3, [r7, #4]
- 8001dc0:	f8b3 308a 	ldrh.w	r3, [r3, #138]	; 0x8a
+ 8001dc0:	f8b3 30a2 	ldrh.w	r3, [r3, #162]	; 0xa2
  8001dc4:	461a      	mov	r2, r3
  8001dc6:	f06f 03b9 	mvn.w	r3, #185	; 0xb9
  8001dca:	fb03 f202 	mul.w	r2, r3, r2
  8001dce:	687b      	ldr	r3, [r7, #4]
- 8001dd0:	f8b3 308c 	ldrh.w	r3, [r3, #140]	; 0x8c
+ 8001dd0:	f8b3 30a4 	ldrh.w	r3, [r3, #164]	; 0xa4
  8001dd4:	4619      	mov	r1, r3
  8001dd6:	019b      	lsls	r3, r3, #6
  8001dd8:	1acb      	subs	r3, r1, r3
  8001dda:	18d1      	adds	r1, r2, r3
  8001ddc:	687b      	ldr	r3, [r7, #4]
- 8001dde:	f8b3 308e 	ldrh.w	r3, [r3, #142]	; 0x8e
+ 8001dde:	f8b3 30a6 	ldrh.w	r3, [r3, #166]	; 0xa6
  8001de2:	461a      	mov	r2, r3
  8001de4:	4613      	mov	r3, r2
  8001de6:	015b      	lsls	r3, r3, #5
@@ -4083,23 +4085,23 @@ void LCD_Touch_Calibration(LCD_Touchscreen_it *hLCD)
  8001df8:	ed97 7a03 	vldr	s14, [r7, #12]
  8001dfc:	eec6 7a87 	vdiv.f32	s15, s13, s14
  8001e00:	687b      	ldr	r3, [r7, #4]
- 8001e02:	edc3 7a1e 	vstr	s15, [r3, #120]	; 0x78
+ 8001e02:	edc3 7a24 	vstr	s15, [r3, #144]	; 0x90
 
 	hLCD->E = ((hLCD->ADC_X0*(Calib_Y1-Calib_Y2))+(hLCD->ADC_X1*(Calib_Y2-Calib_Y0))+(hLCD->ADC_X2*(Calib_Y0-Calib_Y1)))/K;
  8001e06:	687b      	ldr	r3, [r7, #4]
- 8001e08:	f8b3 3084 	ldrh.w	r3, [r3, #132]	; 0x84
+ 8001e08:	f8b3 309c 	ldrh.w	r3, [r3, #156]	; 0x9c
  8001e0c:	461a      	mov	r2, r3
  8001e0e:	23ba      	movs	r3, #186	; 0xba
  8001e10:	fb03 f202 	mul.w	r2, r3, r2
  8001e14:	687b      	ldr	r3, [r7, #4]
- 8001e16:	f8b3 3086 	ldrh.w	r3, [r3, #134]	; 0x86
+ 8001e16:	f8b3 309e 	ldrh.w	r3, [r3, #158]	; 0x9e
  8001e1a:	4619      	mov	r1, r3
  8001e1c:	460b      	mov	r3, r1
  8001e1e:	019b      	lsls	r3, r3, #6
  8001e20:	1a5b      	subs	r3, r3, r1
  8001e22:	441a      	add	r2, r3
  8001e24:	687b      	ldr	r3, [r7, #4]
- 8001e26:	f8b3 3088 	ldrh.w	r3, [r3, #136]	; 0x88
+ 8001e26:	f8b3 30a0 	ldrh.w	r3, [r3, #160]	; 0xa0
  8001e2a:	4619      	mov	r1, r3
  8001e2c:	f06f 03f8 	mvn.w	r3, #248	; 0xf8
  8001e30:	fb03 f301 	mul.w	r3, r3, r1
@@ -4109,47 +4111,47 @@ void LCD_Touch_Calibration(LCD_Touchscreen_it *hLCD)
  8001e3e:	ed97 7a03 	vldr	s14, [r7, #12]
  8001e42:	eec6 7a87 	vdiv.f32	s15, s13, s14
  8001e46:	687b      	ldr	r3, [r7, #4]
- 8001e48:	edc3 7a1f 	vstr	s15, [r3, #124]	; 0x7c
+ 8001e48:	edc3 7a25 	vstr	s15, [r3, #148]	; 0x94
 
 	hLCD->F = ((hLCD->ADC_Y0*((Calib_Y1*hLCD->ADC_X2)-(hLCD->ADC_X1*Calib_Y2)))+(hLCD->ADC_Y1*((hLCD->ADC_X0*Calib_Y2)-(hLCD->ADC_X2*Calib_Y0)))+(hLCD->ADC_Y2*((hLCD->ADC_X1*Calib_Y0)-(Calib_Y1*hLCD->ADC_X0))))/K;
  8001e4c:	687b      	ldr	r3, [r7, #4]
- 8001e4e:	f8b3 308a 	ldrh.w	r3, [r3, #138]	; 0x8a
+ 8001e4e:	f8b3 30a2 	ldrh.w	r3, [r3, #162]	; 0xa2
  8001e52:	4619      	mov	r1, r3
  8001e54:	687b      	ldr	r3, [r7, #4]
- 8001e56:	f8b3 3088 	ldrh.w	r3, [r3, #136]	; 0x88
+ 8001e56:	f8b3 30a0 	ldrh.w	r3, [r3, #160]	; 0xa0
  8001e5a:	461a      	mov	r2, r3
  8001e5c:	f240 1339 	movw	r3, #313	; 0x139
  8001e60:	fb03 f202 	mul.w	r2, r3, r2
  8001e64:	687b      	ldr	r3, [r7, #4]
- 8001e66:	f8b3 3086 	ldrh.w	r3, [r3, #134]	; 0x86
+ 8001e66:	f8b3 309e 	ldrh.w	r3, [r3, #158]	; 0x9e
  8001e6a:	4618      	mov	r0, r3
  8001e6c:	01db      	lsls	r3, r3, #7
  8001e6e:	1ac3      	subs	r3, r0, r3
  8001e70:	4413      	add	r3, r2
  8001e72:	fb03 f201 	mul.w	r2, r3, r1
  8001e76:	687b      	ldr	r3, [r7, #4]
- 8001e78:	f8b3 308c 	ldrh.w	r3, [r3, #140]	; 0x8c
+ 8001e78:	f8b3 30a4 	ldrh.w	r3, [r3, #164]	; 0xa4
  8001e7c:	4618      	mov	r0, r3
  8001e7e:	687b      	ldr	r3, [r7, #4]
- 8001e80:	f8b3 3084 	ldrh.w	r3, [r3, #132]	; 0x84
+ 8001e80:	f8b3 309c 	ldrh.w	r3, [r3, #156]	; 0x9c
  8001e84:	4619      	mov	r1, r3
  8001e86:	460b      	mov	r3, r1
  8001e88:	01db      	lsls	r3, r3, #7
  8001e8a:	1a59      	subs	r1, r3, r1
  8001e8c:	687b      	ldr	r3, [r7, #4]
- 8001e8e:	f8b3 3088 	ldrh.w	r3, [r3, #136]	; 0x88
+ 8001e8e:	f8b3 30a0 	ldrh.w	r3, [r3, #160]	; 0xa0
  8001e92:	019b      	lsls	r3, r3, #6
  8001e94:	1acb      	subs	r3, r1, r3
  8001e96:	fb03 f300 	mul.w	r3, r3, r0
  8001e9a:	441a      	add	r2, r3
  8001e9c:	687b      	ldr	r3, [r7, #4]
- 8001e9e:	f8b3 308e 	ldrh.w	r3, [r3, #142]	; 0x8e
+ 8001e9e:	f8b3 30a6 	ldrh.w	r3, [r3, #166]	; 0xa6
  8001ea2:	4618      	mov	r0, r3
  8001ea4:	687b      	ldr	r3, [r7, #4]
- 8001ea6:	f8b3 3086 	ldrh.w	r3, [r3, #134]	; 0x86
+ 8001ea6:	f8b3 309e 	ldrh.w	r3, [r3, #158]	; 0x9e
  8001eaa:	0199      	lsls	r1, r3, #6
  8001eac:	687b      	ldr	r3, [r7, #4]
- 8001eae:	f8b3 3084 	ldrh.w	r3, [r3, #132]	; 0x84
+ 8001eae:	f8b3 309c 	ldrh.w	r3, [r3, #156]	; 0x9c
  8001eb2:	461c      	mov	r4, r3
  8001eb4:	f46f 739c 	mvn.w	r3, #312	; 0x138
  8001eb8:	fb03 f304 	mul.w	r3, r3, r4
@@ -4161,7 +4163,7 @@ void LCD_Touch_Calibration(LCD_Touchscreen_it *hLCD)
  8001ecc:	ed97 7a03 	vldr	s14, [r7, #12]
  8001ed0:	eec6 7a87 	vdiv.f32	s15, s13, s14
  8001ed4:	687b      	ldr	r3, [r7, #4]
- 8001ed6:	edc3 7a20 	vstr	s15, [r3, #128]	; 0x80
+ 8001ed6:	edc3 7a26 	vstr	s15, [r3, #152]	; 0x98
 
 
 }
@@ -4206,8 +4208,8 @@ void LCD_Touch_ADCInit(LCD_Touchscreen_it *hLCD)
 uint32_t LCD_Touch_ReadX(LCD_Touchscreen_it *hLCD)
 {
  8001f08:	b590      	push	{r4, r7, lr}
- 8001f0a:	b0a7      	sub	sp, #156	; 0x9c
- 8001f0c:	af22      	add	r7, sp, #136	; 0x88
+ 8001f0a:	b0ad      	sub	sp, #180	; 0xb4
+ 8001f0c:	af28      	add	r7, sp, #160	; 0xa0
  8001f0e:	6078      	str	r0, [r7, #4]
 	uint32_t ReadValue=0;
  8001f10:	2300      	movs	r3, #0
@@ -4215,10 +4217,10 @@ uint32_t LCD_Touch_ReadX(LCD_Touchscreen_it *hLCD)
 	LCD_Touch_PinsConf(*hLCD,CoorX);
  8001f14:	687c      	ldr	r4, [r7, #4]
  8001f16:	2301      	movs	r3, #1
- 8001f18:	9320      	str	r3, [sp, #128]	; 0x80
+ 8001f18:	9326      	str	r3, [sp, #152]	; 0x98
  8001f1a:	4668      	mov	r0, sp
  8001f1c:	f104 0310 	add.w	r3, r4, #16
- 8001f20:	2280      	movs	r2, #128	; 0x80
+ 8001f20:	2298      	movs	r2, #152	; 0x98
  8001f22:	4619      	mov	r1, r3
  8001f24:	f002 fada 	bl	80044dc <memcpy>
  8001f28:	e894 000f 	ldmia.w	r4, {r0, r1, r2, r3}
@@ -4306,8 +4308,8 @@ uint32_t LCD_Touch_ReadX(LCD_Touchscreen_it *hLCD)
 uint32_t LCD_Touch_ReadY(LCD_Touchscreen_it *hLCD)
 {
  8001fb0:	b590      	push	{r4, r7, lr}
- 8001fb2:	b0a7      	sub	sp, #156	; 0x9c
- 8001fb4:	af22      	add	r7, sp, #136	; 0x88
+ 8001fb2:	b0ad      	sub	sp, #180	; 0xb4
+ 8001fb4:	af28      	add	r7, sp, #160	; 0xa0
  8001fb6:	6078      	str	r0, [r7, #4]
 	uint32_t ReadValue=0;
  8001fb8:	2300      	movs	r3, #0
@@ -4315,10 +4317,10 @@ uint32_t LCD_Touch_ReadY(LCD_Touchscreen_it *hLCD)
 	LCD_Touch_PinsConf(*hLCD,CoorY);
  8001fbc:	687c      	ldr	r4, [r7, #4]
  8001fbe:	2302      	movs	r3, #2
- 8001fc0:	9320      	str	r3, [sp, #128]	; 0x80
+ 8001fc0:	9326      	str	r3, [sp, #152]	; 0x98
  8001fc2:	4668      	mov	r0, sp
  8001fc4:	f104 0310 	add.w	r3, r4, #16
- 8001fc8:	2280      	movs	r2, #128	; 0x80
+ 8001fc8:	2298      	movs	r2, #152	; 0x98
  8001fca:	4619      	mov	r1, r3
  8001fcc:	f002 fa86 	bl	80044dc <memcpy>
  8001fd0:	e894 000f 	ldmia.w	r4, {r0, r1, r2, r3}
@@ -4423,20 +4425,20 @@ uint32_t LCD_Touch_CoorX(LCD_Touchscreen_it *hLCD)
 	//CoordenadaX=0.5558*LecturaX+0.0037*LecturaY-35.974;//(hLCD->A)*LCD_TouchReadX(hLCD)+(hLCD->B)*LCD_TouchReadY(hLCD)+hLCD->C;
 	CoordenadaX = (hLCD->A)*LecturaX+(hLCD->B)*LecturaY+hLCD->C;
  8002070:	687b      	ldr	r3, [r7, #4]
- 8002072:	ed93 7a1b 	vldr	s14, [r3, #108]	; 0x6c
+ 8002072:	ed93 7a21 	vldr	s14, [r3, #132]	; 0x84
  8002076:	697b      	ldr	r3, [r7, #20]
  8002078:	ee07 3a90 	vmov	s15, r3
  800207c:	eef8 7a67 	vcvt.f32.u32	s15, s15
  8002080:	ee27 7a27 	vmul.f32	s14, s14, s15
  8002084:	687b      	ldr	r3, [r7, #4]
- 8002086:	edd3 6a1c 	vldr	s13, [r3, #112]	; 0x70
+ 8002086:	edd3 6a22 	vldr	s13, [r3, #136]	; 0x88
  800208a:	693b      	ldr	r3, [r7, #16]
  800208c:	ee07 3a90 	vmov	s15, r3
  8002090:	eef8 7a67 	vcvt.f32.u32	s15, s15
  8002094:	ee66 7aa7 	vmul.f32	s15, s13, s15
  8002098:	ee37 7a27 	vadd.f32	s14, s14, s15
  800209c:	687b      	ldr	r3, [r7, #4]
- 800209e:	edd3 7a1d 	vldr	s15, [r3, #116]	; 0x74
+ 800209e:	edd3 7a23 	vldr	s15, [r3, #140]	; 0x8c
  80020a2:	ee77 7a27 	vadd.f32	s15, s14, s15
  80020a6:	eefc 7ae7 	vcvt.u32.f32	s15, s15
  80020aa:	ee17 3a90 	vmov	r3, s15
@@ -4603,9 +4605,9 @@ int main(void)
 		Almacen = 0;
  8002184:	e7ca      	b.n	800211c <main+0x60>
  8002186:	bf00      	nop
- 8002188:	20000358 	.word	0x20000358
+ 8002188:	20000370 	.word	0x20000370
  800218c:	20000050 	.word	0x20000050
- 8002190:	200000e0 	.word	0x200000e0
+ 8002190:	200000f8 	.word	0x200000f8
  8002194:	20000000 	.word	0x20000000
 
 08002198 <SystemClock_Config>:
@@ -5160,7 +5162,7 @@ LoopFillZerobss:
   ldr  r2, =_sbss
  8002410:	20000034 	.word	0x20000034
   ldr  r3, = _ebss
- 8002414:	20000374 	.word	0x20000374
+ 8002414:	2000038c 	.word	0x2000038c
 
 08002418 <ADC_IRQHandler>:
  * @retval None       
@@ -5323,7 +5325,7 @@ __weak void HAL_IncTick(void)
  80024dc:	4770      	bx	lr
  80024de:	bf00      	nop
  80024e0:	20000030 	.word	0x20000030
- 80024e4:	20000370 	.word	0x20000370
+ 80024e4:	20000388 	.word	0x20000388
 
 080024e8 <HAL_GetTick>:
   * @note This function is declared as __weak to be overwritten in case of other 
@@ -5343,7 +5345,7 @@ __weak uint32_t HAL_GetTick(void)
  80024f4:	f85d 7b04 	ldr.w	r7, [sp], #4
  80024f8:	4770      	bx	lr
  80024fa:	bf00      	nop
- 80024fc:	20000370 	.word	0x20000370
+ 80024fc:	20000388 	.word	0x20000388
 
 08002500 <HAL_Delay>:
   *       implementations in user file.

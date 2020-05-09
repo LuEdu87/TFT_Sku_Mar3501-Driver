@@ -66,6 +66,7 @@ typedef struct{
 	GPIO_InitTypeDef hLCD_GPIOx;
 	ADC_HandleTypeDef hadc1;
 	ADC_ChannelConfTypeDef sConfig;
+	ADC_AnalogWDGConfTypeDef hawdg;		//Gestión del watchdog analógico
 
 	float 		A,B,C,D,E,F;
 	uint16_t 	ADC_X0,ADC_X1,ADC_X2,ADC_Y0,ADC_Y1,ADC_Y2;
