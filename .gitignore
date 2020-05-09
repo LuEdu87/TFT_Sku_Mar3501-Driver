@@ -52,7 +52,7 @@ Mkfile.old
 dkms.conf
 
 
-#my Files
+#my Files	SOLO USAR CUANDO QUERAMOS GUARDAR EN EL REPOSITORIO LA CARPETA CORE Y DRIVER
 #/*
 #!Core/
 #!Drivers/
