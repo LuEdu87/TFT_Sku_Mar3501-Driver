@@ -1,0 +1,41 @@
+!SESSION 2020-05-09 12:51:04.524 -----------------------------------------------
+eclipse.buildId=Version 1.2.1
+java.version=1.8.0_202
+java.vendor=AdoptOpenJdk
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=es_ES
+Framework arguments:  C:\Users\El_an\Embedded-C\RepositorioLCDShield\LCD_TFT_004_Tests_LCD_OK_TCHOK_SD_OK_TEXT_OK\.project
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 C:\Users\El_an\Embedded-C\RepositorioLCDShield\LCD_TFT_004_Tests_LCD_OK_TCHOK_SD_OK_TEXT_OK\.project
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2020-05-09 12:53:04.473
+!MESSAGE Log4j initialized with config file C:\Users\El_an\Embedded-C\RepositorioLCDShield\LCD_TFT_004_Tests_LCD_OK_TCHOK_SD_OK_TEXT_OK\.metadata\.log4j.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2020-05-09 12:53:08.212
+!MESSAGE Started RMI Server, listening on port 41337
+
+!ENTRY org.eclipse.equinox.p2.metadata.repository 2 0 2020-05-09 12:53:10.191
+!MESSAGE Error parsing metadata repository
+!SUBENTRY 1 org.eclipse.equinox.p2.core 2 0 2020-05-09 12:53:10.191
+!MESSAGE Error in file:/C:/ST/STM32CubeIDE_1.1.0/STM32CubeIDE/p2/org.eclipse.equinox.p2.repository/cache/content-783366767.jar at line 6767, column 45: Missing required attribute in "unit": id
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 4 4 2020-05-09 12:53:23.994
+!MESSAGE com.st.stm32cube.ide.mcu.ide/META-INF/version/build_ref file not found, build reference will not be reported into properties
+!SESSION 2020-05-09 12:54:16.920 -----------------------------------------------
+eclipse.buildId=Version 1.2.1
+java.version=1.8.0_202
+java.vendor=AdoptOpenJdk
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=es_ES
+Command-line arguments:  -os win32 -ws win32 -arch x86_64
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2020-05-09 12:54:33.917
+!MESSAGE Log4j initialized with config file C:\Users\El_an\Embedded-C\RepositorioLCDShield\LCD_TFT_004_Tests_LCD_OK_TCHOK_SD_OK_TEXT_OK\.metadata\.log4j.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2020-05-09 12:54:40.053
+!MESSAGE Started RMI Server, listening on port 41337
+
+!ENTRY org.eclipse.equinox.p2.metadata.repository 2 0 2020-05-09 12:54:42.006
+!MESSAGE Error parsing metadata repository
+!SUBENTRY 1 org.eclipse.equinox.p2.core 2 0 2020-05-09 12:54:42.006
+!MESSAGE Error in file:/C:/ST/STM32CubeIDE_1.1.0/STM32CubeIDE/p2/org.eclipse.equinox.p2.repository/cache/content-783366767.jar at line 6767, column 45: Missing required attribute in "unit": id
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 4 4 2020-05-09 12:54:42.020
+!MESSAGE com.st.stm32cube.ide.mcu.ide/META-INF/version/build_ref file not found, build reference will not be reported into properties
