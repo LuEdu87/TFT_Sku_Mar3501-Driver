@@ -1,0 +1,144 @@
+
+
+#ifndef INC_LCD_SCREEN_H_
+#define INC_LCD_SCREEN_H_
+
+
+#include "main.h"
+#include "stm32f4xx_hal.h"
+#include <string.h>
+#include <stdio.h>
+#include <math.h>
+
+
+
+#define RST_GPIOx		GPIOC
+#define RST_Pin_No		GPIO_PIN_1
+
+#define CS_GPIOx		GPIOB
+#define CS_Pin_No		GPIO_PIN_0
+
+#define RS_GPIOx		GPIOA
+#define RS_Pin_No		GPIO_PIN_4
+
+#define WR_GPIOx		GPIOA
+#define WR_Pin_No		GPIO_PIN_1
+
+#define RD_GPIOx		GPIOA
+#define RD_Pin_No		GPIO_PIN_0
+
+
+
+#define D0_GPIOx		GPIOA
+#define D0_Pin_No		GPIO_PIN_9
+
+#define D1_GPIOx		GPIOC
+#define D1_Pin_No		GPIO_PIN_7
+
+#define D2_GPIOx		GPIOA
+#define D2_Pin_No		GPIO_PIN_10
+
+#define D3_GPIOx		GPIOB
+#define D3_Pin_No		GPIO_PIN_3
+
+#define D4_GPIOx		GPIOB
+#define D4_Pin_No		GPIO_PIN_5
+
+#define D5_GPIOx		GPIOB
+#define D5_Pin_No		GPIO_PIN_4
+
+#define D6_GPIOx		GPIOB
+#define D6_Pin_No		GPIO_PIN_10
+
+#define D7_GPIOx		GPIOA
+#define D7_Pin_No		GPIO_PIN_8
+
+#define D10_GPIOx 		GPIOB
+#define D10_Pin_No		GPIO_PIN_6
+
+
+#define MemAccsCtrl_CMD				0x36
+#define MemAccsCtrl_IzqDer_Abajo	0x28 //MY=0 MX=0 MV=1 ML=0 = MH=0 (->)&(abajo)
+#define MemAccsCtrl_Abajo_IzqDer	0x08 //MY=0 MX=0 MV=0 ML=0 = MH=0 (Abajo)&(->)
+
+#define MemoryWriteCMD		0x2C
+
+#define DISPLAY_OFF			0x28
+#define DISPLAY_ON			0x29
+#define CMD_NOPARAM			0x00	//Empty Parameter
+
+
+#define Comando					1
+#define Data					2
+#define CoorX					1
+#define CoorY					2
+
+#define MaxWidth				479
+#define MaxHigh					319
+
+#define ENABLE					1
+#define DISABLE					0
+
+#define TEXT_LETTER				1
+#define TEXT_DATA				2
+
+
+//Utilizar Decimales o no cuando queramos mostrar una variable en la pantalla.
+
+#define COMA	1
+#define NO_COMA	2
+
+/*
+ * Colores
+ */
+
+#define Violeta			0xF81F
+#define Blanco			0xFFFF
+
+
+/*
+ * Array donde ponemos una secuencia de comandos y parametros
+ * que contienen los parametros de la pantalla para configurar
+ */
+
+
+
+
+
+
+
+typedef struct{
+
+	GPIO_InitTypeDef hLCD_GPIOx;
+	uint32_t		Status;
+
+}LCD_SCREEN_Handle_t;
+
+
+
+
+
+
+
+
+void LCD_SCREEN_HwInit(LCD_SCREEN_Handle_t hLCD);
+void LCD_SCREEN_Init(LCD_SCREEN_Handle_t hLCD);
+void LCD_SCREEN_Enable(void);
+void LCD_SCREEN_Disable(void);
+void LCD_SCREEN_Reset(void);
+void LCD_SCREEN_WriteData(short int *data,uint32_t lenght);
+void LCD_SCREEN_WriteDataSingle(uint8_t data,uint8_t CmdorData);
+void LCD_SCREEN_Coordenates(uint16_t Xo,uint16_t Yo,uint16_t Xe,uint16_t Ye);
+void LCD_SCREEN_PaintColor(void);
+void LCD_SCREEN_ReadData(LCD_SCREEN_Handle_t hLCD_Scr,uint8_t Cmd);
+void LCD_SCREEN_PaintCharacters(uint16_t CoordX,uint16_t CoordY,char *Letter,uint16_t Colours, uint8_t Size);
+void LCD_SCREEN_PaintVariable(uint16_t CoordX,uint16_t CoordY,float Value,uint16_t Colours, uint8_t Size,uint8_t FloatOrInteger);
+void LCD_SCREEN_PaintPixels(uint16_t Xo, uint16_t Yo, uint16_t Xf, uint16_t Yf, uint16_t Colours);
+
+
+
+
+
+
+
+#endif
