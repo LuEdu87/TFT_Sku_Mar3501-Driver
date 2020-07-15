@@ -24,24 +24,24 @@ endif
 
 # Add inputs and outputs from these tool invocations to the build variables 
 EXECUTABLES += \
-LCD_TFT_004_Tests_LCD_OK_TCHOK_SD_OK_TEXT_OK.elf \
+TFT_Sku_Mar3501-Driver.elf \
 
 SIZE_OUTPUT += \
 default.size.stdout \
 
 OBJDUMP_LIST += \
-LCD_TFT_004_Tests_LCD_OK_TCHOK_SD_OK_TEXT_OK.list \
+TFT_Sku_Mar3501-Driver.list \
 
 OBJCOPY_BIN += \
-LCD_TFT_004_Tests_LCD_OK_TCHOK_SD_OK_TEXT_OK.bin \
+TFT_Sku_Mar3501-Driver.bin \
 
 
 # All Target
-all: LCD_TFT_004_Tests_LCD_OK_TCHOK_SD_OK_TEXT_OK.elf secondary-outputs
+all: TFT_Sku_Mar3501-Driver.elf secondary-outputs
 
 # Tool invocations
-LCD_TFT_004_Tests_LCD_OK_TCHOK_SD_OK_TEXT_OK.elf: $(OBJS) $(USER_OBJS) C:\Users\El_an\Embedded-C\TFT_Sku_Mar3501-Driver\STM32F446RETX_FLASH.ld
-	arm-none-eabi-gcc -o "LCD_TFT_004_Tests_LCD_OK_TCHOK_SD_OK_TEXT_OK.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\El_an\Embedded-C\TFT_Sku_Mar3501-Driver\STM32F446RETX_FLASH.ld" -Wl,-Map="LCD_TFT_004_Tests_LCD_OK_TCHOK_SD_OK_TEXT_OK.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+TFT_Sku_Mar3501-Driver.elf: $(OBJS) $(USER_OBJS) C:\Users\El_an\Embedded-C\Drivers_LCD_Github\TFT_Sku_Mar3501-Driver\STM32F446RETX_FLASH.ld
+	arm-none-eabi-gcc -o "TFT_Sku_Mar3501-Driver.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\El_an\Embedded-C\Drivers_LCD_Github\TFT_Sku_Mar3501-Driver\STM32F446RETX_FLASH.ld" -Wl,-Map="TFT_Sku_Mar3501-Driver.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
@@ -50,13 +50,13 @@ default.size.stdout: $(EXECUTABLES)
 	@echo 'Finished building: $@'
 	@echo ' '
 
-LCD_TFT_004_Tests_LCD_OK_TCHOK_SD_OK_TEXT_OK.list: $(EXECUTABLES)
-	arm-none-eabi-objdump -h -S $(EXECUTABLES) > "LCD_TFT_004_Tests_LCD_OK_TCHOK_SD_OK_TEXT_OK.list"
+TFT_Sku_Mar3501-Driver.list: $(EXECUTABLES)
+	arm-none-eabi-objdump -h -S $(EXECUTABLES) > "TFT_Sku_Mar3501-Driver.list"
 	@echo 'Finished building: $@'
 	@echo ' '
 
-LCD_TFT_004_Tests_LCD_OK_TCHOK_SD_OK_TEXT_OK.bin: $(EXECUTABLES)
-	arm-none-eabi-objcopy  -O binary $(EXECUTABLES) "LCD_TFT_004_Tests_LCD_OK_TCHOK_SD_OK_TEXT_OK.bin"
+TFT_Sku_Mar3501-Driver.bin: $(EXECUTABLES)
+	arm-none-eabi-objcopy  -O binary $(EXECUTABLES) "TFT_Sku_Mar3501-Driver.bin"
 	@echo 'Finished building: $@'
 	@echo ' '
 

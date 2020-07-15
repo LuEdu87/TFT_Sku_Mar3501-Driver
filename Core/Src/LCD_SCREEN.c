@@ -6,7 +6,7 @@
 
 /*
  * This array is for INIT parameters of the screen. Each line is a command and follow of parameters.
- * for more information go to Reference manual of ILI9486 SKU_MAR3501  .
+ * for more information go to Reference manual of ILI9486 SKU_MAR3501   .
  */
 const short int InitCmd[86] = {
 				  //CMD		//Parameters
