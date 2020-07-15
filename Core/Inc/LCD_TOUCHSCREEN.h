@@ -9,6 +9,19 @@
 #include <stdio.h>
 
 
+
+
+/*------------------------------------------------------------------------------------------
+ * 								DEFINES
+ ------------------------------------------------------------------------------------------*/
+
+
+/*
+ * LCD TOUCHSCREEN HARDWARE PINS DEFINITION.
+ * -This section is for assign each pin of the LCD (RST,WR,D0...D7) to Ucontroller pins.
+ *  @NOTE: it is important to know that you have to alternate different pins to take the resistance of X and Y
+ *
+ */
 #define RST_GPIOx		GPIOC
 #define RST_Pin_No		GPIO_PIN_1
 
@@ -34,21 +47,13 @@
 
 
 
-/*
- * Determinada que pines activar como analogicos
- * para leer la coordenada X o Y
- */
-
+//This is for mark the reader, when we want to read the X value or Y of screen.
 #define CoorX					1
 #define CoorY					2
 
 
 
-/*
- * Coordenadas (X0,Y0) para el 20% 50% y 80% que usaré para la calibracion
- * de la pantalla.
- */
-
+//Coordinates to put the points for the calibration.
 #define Calib_X0		50
 #define Calib_X1		240
 #define Calib_X2		384
@@ -61,17 +66,35 @@
 
 
 
+/*------------------------------------------------------------------------------------------------------
+ * 									STRUCTS DEFINITION
+ ------------------------------------------------------------------------------------------------------*/
+
+
+/*
+ * Struct for the Touchscreen handle.
+ */
+
 typedef struct{
 
 	GPIO_InitTypeDef hLCD_GPIOx;
 	ADC_HandleTypeDef hadc1;
 	ADC_ChannelConfTypeDef sConfig;
 
+	//This parameter is for use KRAMER in the matrix to solve the
+	//the equation system and take the values for the touchscreen calibration
 	float 		A,B,C,D,E,F;
 	uint16_t 	ADC_X0,ADC_X1,ADC_X2,ADC_Y0,ADC_Y1,ADC_Y2;
 
 
 }LCD_Touchscreen_it;
+
+
+
+
+/*------------------------------------------------------------------------------------------------------
+ * 									METHODS
+ ------------------------------------------------------------------------------------------------------*/
 
 
 void HAL_ADC_MspInit(ADC_HandleTypeDef* hadc);

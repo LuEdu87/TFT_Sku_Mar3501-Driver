@@ -1,6 +1,12 @@
 
 #include "LCD_TOUCHSCREEN.h"
 
+
+
+
+/*------------------------------------------------------------------------------------------------------
+ * 						STATIC METHODS DEFINITION
+ ------------------------------------------------------------------------------------------------------*/
 static uint8_t LCD_Touch_Painting(LCD_Touchscreen_it *hLCD);
 static void LCD_Touch_ADCSwConfig(LCD_Touchscreen_it *hLCD);
 static void LCD_Touch_PinsOff(LCD_Touchscreen_it *hLCD);
@@ -9,7 +15,11 @@ static void LCD_Touch_PinsConf(LCD_Touchscreen_it hLCD,uint8_t XoY);
 
 
 
-
+/*
+ * Function:
+ *  Here you can use to paint the screen while it is being touched.
+ *  This is for drawing the screen using the pencil or the fingers.
+ */
 
 static uint8_t LCD_Touch_Painting(LCD_Touchscreen_it *hLCD)
 {
@@ -19,9 +29,7 @@ static uint8_t LCD_Touch_Painting(LCD_Touchscreen_it *hLCD)
 	CoordY= LCD_Touch_ReadY(hLCD);
 	if((CoordX>=100)&&(CoordY>=100))
 	{
-		/*ScreenCoordX = LCD_TouchCoorX(hLCD);
-		ScreenCoordY = LCD_TouchCoorY(hLCD);
-		LCD_Coordenates((uint16_t)ScreenCoordX, (uint16_t)ScreenCoordY, (uint16_t)ScreenCoordX+1, (uint16_t)ScreenCoordY+1);*/
+
 		return ENABLE;
 	}else
 	{
@@ -40,7 +48,10 @@ static uint8_t LCD_Touch_Painting(LCD_Touchscreen_it *hLCD)
 
 
 
-
+/*
+ * Function:
+ *	ADC hardware configuration
+ */
 static void LCD_Touch_ADCSwConfig(LCD_Touchscreen_it *hLCD)
 {
 	hLCD->hadc1.Instance = ADC1;
@@ -73,7 +84,11 @@ static void LCD_Touch_ADCSwConfig(LCD_Touchscreen_it *hLCD)
 
 
 
-
+/*
+ * Function:
+ *	This is to turn the LCD screen pins normal, because the SCREEN and TOUCHSCREEN share pins. So if you wan
+ *	to use touchscreen and Screen, you must change pins configurations between them.
+ */
 static void LCD_Touch_PinsOff(LCD_Touchscreen_it *hLCD)
 {
 
@@ -100,7 +115,10 @@ static void LCD_Touch_PinsOff(LCD_Touchscreen_it *hLCD)
 
 
 
-
+/*
+ * Function:
+ *
+ */
 static void LCD_Touch_PinsConf(LCD_Touchscreen_it hLCD,uint8_t XoY)
 {
 	HAL_GPIO_WritePin(RST_GPIOx, RST_Pin_No, GPIO_PIN_SET);
@@ -174,7 +192,10 @@ static void LCD_Touch_PinsConf(LCD_Touchscreen_it hLCD,uint8_t XoY)
 
 
 
-
+/*
+ * Function:
+ *
+ */
 void HAL_ADC_MspInit(ADC_HandleTypeDef* hadc1)
 {
 	GPIO_InitTypeDef GPIO_InitStruct = {0};
@@ -207,14 +228,19 @@ void HAL_ADC_MspInit(ADC_HandleTypeDef* hadc1)
 
 
 
-
+/*
+ * Function:
+ *  This process is to calibrate the touchscreen. Here I put 3 points in different places and take the ADC value
+ *  with this I create an Matrix of value, and using Krammer to resolve the equation system I take the ratios
+ *  for the calibration.
+ */
 void LCD_Touch_Calibration(LCD_Touchscreen_it *hLCD)
 {
 	float K;
 	LCD_Touch_PinsOff(hLCD);
 
 
-	//1-Dibujamos el primer Punto y Esperamos que pulsen
+	//1-Draw the first point and wait
 	LCD_SCREEN_Coordenates(Calib_X0-5, Calib_Y0-5, Calib_X0+5, Calib_Y0+5);
 	LCD_SCREEN_PaintColor();
 
@@ -230,7 +256,7 @@ void LCD_Touch_Calibration(LCD_Touchscreen_it *hLCD)
 	}
 
 
-	//1-Dibujamos el Segundo Punto y Esperamos que pulsen
+	//2-Draw the second point and wait
 	LCD_SCREEN_Coordenates(Calib_X1-5, Calib_Y1-5, Calib_X1+5, Calib_Y1+5);
 	LCD_SCREEN_PaintColor();
 
@@ -243,7 +269,7 @@ void LCD_Touch_Calibration(LCD_Touchscreen_it *hLCD)
 
 	}
 
-	//1-Dibujamos el Tercer Punto y Esperamos que pulsen
+	//3-Draw the third point and wait
 	LCD_SCREEN_Coordenates(Calib_X2-5, Calib_Y2-5, Calib_X2+5, Calib_Y2+5);
 	LCD_SCREEN_PaintColor();
 	while(!LCD_Touch_Painting(hLCD));	//Esperamos que guarde que se pulse la pantalla.
@@ -257,7 +283,7 @@ void LCD_Touch_Calibration(LCD_Touchscreen_it *hLCD)
 
 
 
-
+	//Solve the equation.
 	K=((hLCD->ADC_X0-hLCD->ADC_X2)*(hLCD->ADC_Y1-hLCD->ADC_Y2))-((hLCD->ADC_X1-hLCD->ADC_X2)*(hLCD->ADC_Y0-hLCD->ADC_Y2));
 
 	hLCD->A =((hLCD->ADC_Y0*(Calib_X2-Calib_X1))+(hLCD->ADC_Y1*(Calib_X0-Calib_X2))+(hLCD->ADC_Y2*(Calib_X1-Calib_X0)))/K;
@@ -287,7 +313,10 @@ void LCD_Touch_Init(LCD_Touchscreen_it *hLCD)
 
 
 
-
+/*
+ * Function:
+ *  Activation of ADC for the analogic read.
+ */
 void LCD_Touch_ADCInit(LCD_Touchscreen_it *hLCD)
 {
 	LCD_Touch_ADCSwConfig(hLCD);
@@ -298,7 +327,10 @@ void LCD_Touch_ADCInit(LCD_Touchscreen_it *hLCD)
 
 
 
-
+/*
+ * Function:
+ *	Read the analogical resistance of the X coordinate
+ */
 uint32_t LCD_Touch_ReadX(LCD_Touchscreen_it *hLCD)
 {
 	uint32_t ReadValue=0;
@@ -326,7 +358,10 @@ uint32_t LCD_Touch_ReadX(LCD_Touchscreen_it *hLCD)
 
 
 
-
+/*
+ * Function:
+ *	Read the analogical resistance of the Y coordinate
+ */
 uint32_t LCD_Touch_ReadY(LCD_Touchscreen_it *hLCD)
 {
 	uint32_t ReadValue=0;
@@ -340,7 +375,6 @@ uint32_t LCD_Touch_ReadY(LCD_Touchscreen_it *hLCD)
 		HAL_ADC_Start(&hLCD->hadc1);
 		HAL_ADC_PollForConversion(&hLCD->hadc1, 1000);
 		ReadValue += HAL_ADC_GetValue(&hLCD->hadc1);
-		//ReadValue = HAL_ADC_GetValue(&hLCD->hadc1);
 		HAL_ADC_Stop(&hLCD->hadc1);
 	}
 
@@ -355,14 +389,17 @@ uint32_t LCD_Touch_ReadY(LCD_Touchscreen_it *hLCD)
 
 
 
-
+/*
+ * Function:
+ *	Return the Coordinate X of the screen.
+ */
 uint32_t LCD_Touch_CoorX(LCD_Touchscreen_it *hLCD)
 {
 	uint32_t CoordenadaX,LecturaX,LecturaY;
 	LecturaX = LCD_Touch_ReadX(hLCD);
 	LecturaY = LCD_Touch_ReadY(hLCD);
 
-	//CoordenadaX=0.5558*LecturaX+0.0037*LecturaY-35.974;//(hLCD->A)*LCD_TouchReadX(hLCD)+(hLCD->B)*LCD_TouchReadY(hLCD)+hLCD->C;
+
 	CoordenadaX = (hLCD->A)*LecturaX+(hLCD->B)*LecturaY+hLCD->C;
 	return CoordenadaX;
 }
@@ -370,14 +407,17 @@ uint32_t LCD_Touch_CoorX(LCD_Touchscreen_it *hLCD)
 
 
 
-
+/*
+ * Function:
+ *	Return the coordinate Y of the screen.
+ */
 uint32_t LCD_Touch_CoorY(LCD_Touchscreen_it *hLCD)
 {
 	uint32_t CoordenadaY,LecturaX,LecturaY;
 	LecturaX = LCD_Touch_ReadX(hLCD);
 	LecturaY = LCD_Touch_ReadY(hLCD);
 
-	//CoordenadaY=0.0069*LecturaX+0.3981*LecturaY-39.36;//(hLCD->D)*LCD_TouchReadY(hLCD)+(hLCD->E)*LCD_TouchReadY(hLCD)+hLCD->F;
+
 	CoordenadaY = (hLCD->D)*LecturaX+(hLCD->E)*LecturaY+hLCD->F;
 	return CoordenadaY;
 }
