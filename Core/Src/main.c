@@ -62,16 +62,9 @@ LCD_SD_Handle_it hsd;
 LCD_Touchscreen_it htch;
 
 
-char *FileSD[]={"Cortinas_Kurumi.bin",
-				"Toalla_Kurumi.bin",
-				"Cuerdas_Kurumi.bin",
-				"Escor_Kurumi.bin",
-				"Sofa_Kurumi.bin",
-				"School_Kurumi.bin",
-				"Clock_Kurumi.bin",
-				"Shh_Kurumi.bin",
-				"Ero_Kurumi.bin",
-				"Nurse_kurumi.bin"
+char *FileSD[]={"Car.bin",
+				"City.bin",
+				"Universe.bin"
 				};
 
 
@@ -196,59 +189,6 @@ int main(void)
 
 
 
-
-/*
-	LCD_SCREEN_PaintCharacters(0, 0, "Tiempo en Segundos ", Violeta, 2);
-
-	while(1)
-	{
-		while(TestNumeros<60)
-		{
-			LCD_SCREEN_PaintVariable(0, 30, TestNumeros, Violeta, 3,COMA);
-			TestNumeros+=0.01;
-			TestNumeros++;
-			HAL_Delay(0.1);
-		}
-
-		while(TestNumeros>1)
-		{
-			LCD_SCREEN_PaintVariable(0, 30, TestNumeros, Violeta, 3,COMA);
-			TestNumeros-=0.01;
-			TestNumeros--;
-			HAL_Delay(0.1);
-		}
-	}
-
-*/
-
-
-
-	//LCD_Coordenates(0, 0, 479,319);
-	//PintarKurumi((uint8_t*)Kurumi_cortinas,sizeof(Kurumi_cortinas));
-
-	/* Infinite loop */
-	/* USER CODE BEGIN WHILE */
-
-
-	//LCD_SD_Init(&hlcd);
-
-	//HAL_GPIO_WritePin(D10_GPIOx, D10_Pin_No, GPIO_PIN_RESET);
-
-
-	//LCD_SD_SearchFileDirectory(&hlcd);
-	//LCD_SD_READSector(&hlcd,(uint32_t)hlcd.SDhandle.PartitionTable);	//NO OLVIDAR CORREGIR ESTE FALLO DE DIRECCION
-//	while(1)
-//	{
-//		LCD_SD_Mount(&hlcd);
-//		if(i>(Valor-1))
-//		{
-//			i=0;
-//		}
-//		LCD_SD_FileOpen(&hlcd, FileSD[i]);
-//		i++;
-//	}
-
-	//LCD_SD_FileOpen(&hlcd, FileSD1);
 
 
 
