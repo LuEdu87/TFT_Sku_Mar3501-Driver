@@ -40,8 +40,8 @@ LCD_TFT_004_Tests_LCD_OK_TCHOK_SD_OK_TEXT_OK.bin \
 all: LCD_TFT_004_Tests_LCD_OK_TCHOK_SD_OK_TEXT_OK.elf secondary-outputs
 
 # Tool invocations
-LCD_TFT_004_Tests_LCD_OK_TCHOK_SD_OK_TEXT_OK.elf: $(OBJS) $(USER_OBJS) C:\Users\El_an\Embedded-C\RepositorioLCDShield\LCD_TFT_004_Tests_LCD_OK_TCHOK_SD_OK_TEXT_OK\STM32F446RETX_FLASH.ld
-	arm-none-eabi-gcc -o "LCD_TFT_004_Tests_LCD_OK_TCHOK_SD_OK_TEXT_OK.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\El_an\Embedded-C\RepositorioLCDShield\LCD_TFT_004_Tests_LCD_OK_TCHOK_SD_OK_TEXT_OK\STM32F446RETX_FLASH.ld" -Wl,-Map="LCD_TFT_004_Tests_LCD_OK_TCHOK_SD_OK_TEXT_OK.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+LCD_TFT_004_Tests_LCD_OK_TCHOK_SD_OK_TEXT_OK.elf: $(OBJS) $(USER_OBJS) C:\Users\El_an\Embedded-C\TFT_Sku_Mar3501-Driver\STM32F446RETX_FLASH.ld
+	arm-none-eabi-gcc -o "LCD_TFT_004_Tests_LCD_OK_TCHOK_SD_OK_TEXT_OK.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\El_an\Embedded-C\TFT_Sku_Mar3501-Driver\STM32F446RETX_FLASH.ld" -Wl,-Map="LCD_TFT_004_Tests_LCD_OK_TCHOK_SD_OK_TEXT_OK.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

@@ -12,6 +12,17 @@
 
 
 
+/*------------------------------------------------------------------------------------------
+ * 								DEFINES
+ ------------------------------------------------------------------------------------------*/
+
+
+/*
+ * LCD SCREEN HARDWARE PINS DEFINITION.
+ * -This section is for assign each pin of the LCD (RST,WR,D0...D7) to Ucontroller pins.
+ *
+ */
+
 #define RST_GPIOx		GPIOC
 #define RST_Pin_No		GPIO_PIN_1
 
@@ -57,22 +68,38 @@
 #define D10_Pin_No		GPIO_PIN_6
 
 
+
+
+/*
+ * LCD SCREENS Commands
+ */
+
+//Memory access control (For more information go to datasheet)
 #define MemAccsCtrl_CMD				0x36
 #define MemAccsCtrl_IzqDer_Abajo	0x28 //MY=0 MX=0 MV=1 ML=0 = MH=0 (->)&(abajo)
 #define MemAccsCtrl_Abajo_IzqDer	0x08 //MY=0 MX=0 MV=0 ML=0 = MH=0 (Abajo)&(->)
 
+//Memory Screen Write
 #define MemoryWriteCMD		0x2C
 
+//Others screen commands
 #define DISPLAY_OFF			0x28
 #define DISPLAY_ON			0x29
-#define CMD_NOPARAM			0x00	//Empty Parameter
+#define CMD_NOPARAM			0x00
 
 
+
+//Definition to know, when the data is put on the pins , if it is a command or a parameter.
 #define Comando					1
 #define Data					2
+
+
+//Define of sort when the page and column range is defined
 #define CoorX					1
 #define CoorY					2
 
+
+//Total size of the screen.
 #define MaxWidth				479
 #define MaxHigh					319
 
@@ -83,29 +110,28 @@
 #define TEXT_DATA				2
 
 
-//Utilizar Decimales o no cuando queramos mostrar una variable en la pantalla.
-
+//This is to declare if we'll use coma or not in ours numbers.
 #define COMA	1
 #define NO_COMA	2
 
-/*
- * Colores
- */
 
+//Some test colors. REMEMBER: The screen works in RGB565.
 #define Violeta			0xF81F
 #define Blanco			0xFFFF
 
 
+
+
+
+
+/*------------------------------------------------------------------------------------------------------
+ * 									STRUCTS DEFINITION
+ ------------------------------------------------------------------------------------------------------*/
+
+
 /*
- * Array donde ponemos una secuencia de comandos y parametros
- * que contienen los parametros de la pantalla para configurar
+ * Struct for the LCD handle, with Hardware definition and status parameter.
  */
-
-
-
-
-
-
 
 typedef struct{
 
@@ -119,6 +145,13 @@ typedef struct{
 
 
 
+
+
+
+
+/*------------------------------------------------------------------------------------------------------
+ * 									METHODS
+ ------------------------------------------------------------------------------------------------------*/
 
 
 void LCD_SCREEN_HwInit(LCD_SCREEN_Handle_t hLCD);
@@ -136,9 +169,5 @@ void LCD_SCREEN_PaintVariable(uint16_t CoordX,uint16_t CoordY,float Value,uint16
 void LCD_SCREEN_PaintPixels(uint16_t Xo, uint16_t Yo, uint16_t Xf, uint16_t Yf, uint16_t Colours);
 
 
-
-
-
-
-
 #endif
+

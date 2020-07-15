@@ -27,23 +27,23 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   ALLOC
  11 .ARM.attributes 00000030  00000000  00000000  00020034  2**0
                   CONTENTS, READONLY
- 12 .debug_info   0000bb6a  00000000  00000000  00020064  2**0
+ 12 .debug_info   0000bb35  00000000  00000000  00020064  2**0
                   CONTENTS, READONLY, DEBUGGING
- 13 .debug_abbrev 00001d50  00000000  00000000  0002bbce  2**0
+ 13 .debug_abbrev 00001d36  00000000  00000000  0002bb99  2**0
                   CONTENTS, READONLY, DEBUGGING
- 14 .debug_aranges 000008f8  00000000  00000000  0002d920  2**3
+ 14 .debug_aranges 000008f0  00000000  00000000  0002d8d0  2**3
                   CONTENTS, READONLY, DEBUGGING
- 15 .debug_ranges 00000810  00000000  00000000  0002e218  2**3
+ 15 .debug_ranges 00000808  00000000  00000000  0002e1c0  2**3
                   CONTENTS, READONLY, DEBUGGING
- 16 .debug_macro  000215bf  00000000  00000000  0002ea28  2**0
+ 16 .debug_macro  000215bf  00000000  00000000  0002e9c8  2**0
                   CONTENTS, READONLY, DEBUGGING
- 17 .debug_line   00008c2a  00000000  00000000  0004ffe7  2**0
+ 17 .debug_line   00008c19  00000000  00000000  0004ff87  2**0
                   CONTENTS, READONLY, DEBUGGING
- 18 .debug_str    000cccc1  00000000  00000000  00058c11  2**0
+ 18 .debug_str    000ccc79  00000000  00000000  00058ba0  2**0
                   CONTENTS, READONLY, DEBUGGING
- 19 .comment      0000007b  00000000  00000000  001258d2  2**0
+ 19 .comment      0000007b  00000000  00000000  00125819  2**0
                   CONTENTS, READONLY
- 20 .debug_frame  000023ec  00000000  00000000  00125950  2**2
+ 20 .debug_frame  000023c4  00000000  00000000  00125894  2**2
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -363,9 +363,9 @@ Disassembly of section .text:
  8000512:	bf00      	nop
 
 08000514 <LCD_SCREEN_Wr>:
-
 /*
- * Creación de flancos para el comando de escritura en la pantalla
+ * Function:
+ * 	Here we can make the toggling of the wr pin.
  */
 static void  LCD_SCREEN_Wr(void)
 {
@@ -383,8 +383,8 @@ static void  LCD_SCREEN_Wr(void)
  8000524:	40020000 	.word	0x40020000
 
 08000528 <LCD_SCREEN_ClkPinsEnable>:
- * Activamos los relojes para los distintos buses que tinen
- * los pines
+ * Function:
+ *  Activate the clocks of GPIO on the BUS.
  */
 
 static void LCD_SCREEN_ClkPinsEnable(void)
@@ -392,7 +392,7 @@ static void LCD_SCREEN_ClkPinsEnable(void)
  8000528:	b480      	push	{r7}
  800052a:	b085      	sub	sp, #20
  800052c:	af00      	add	r7, sp, #0
-	//Activamos los relojes de los perifericos
+
 	__HAL_RCC_GPIOA_CLK_ENABLE();
  800052e:	2300      	movs	r3, #0
  8000530:	60fb      	str	r3, [r7, #12]
@@ -442,9 +442,9 @@ static void LCD_SCREEN_ClkPinsEnable(void)
  8000590:	40023800 	.word	0x40023800
 
 08000594 <LCD_SCREEN_ConvertDatatoPins>:
- * Esta función convierte la palabra
- * de entrada y la subdividie en cada
- * pin correspondiente.
+ * @datos: value that you want to put in the pins (D0..D7)
+ *
+ *
  */
 static void LCD_SCREEN_ConvertDatatoPins(uint8_t *datos)
 {
@@ -548,9 +548,9 @@ static void LCD_SCREEN_ConvertDatatoPins(uint8_t *datos)
  800066c:	40020400 	.word	0x40020400
 
 08000670 <LCD_SCREEN_HwInit>:
-/*
- * Configuración Hardware para los pines de control sobre la pantalla
- *
+ * Function:
+ * 	Hardware Pins Configuration for the SCREEN.
+ *  *
  */
 void LCD_SCREEN_HwInit(LCD_SCREEN_Handle_t hLCD)
 {
@@ -559,7 +559,7 @@ void LCD_SCREEN_HwInit(LCD_SCREEN_Handle_t hLCD)
  8000674:	af00      	add	r7, sp, #0
  8000676:	f107 0c08 	add.w	ip, r7, #8
  800067a:	e88c 000f 	stmia.w	ip, {r0, r1, r2, r3}
-	//Activación de parametros genericos de los pines @CAMBIAR : hay que poner el modo en otro sitio,para poder cambiar entre RD y WR
+
 	LCD_SCREEN_ClkPinsEnable();
  800067e:	f7ff ff53 	bl	8000528 <LCD_SCREEN_ClkPinsEnable>
 	hLCD.hLCD_GPIOx.Pull = GPIO_PULLUP;
@@ -572,9 +572,7 @@ void LCD_SCREEN_HwInit(LCD_SCREEN_Handle_t hLCD)
  800068a:	2301      	movs	r3, #1
  800068c:	60fb      	str	r3, [r7, #12]
 
-	/*
-	 * COnfiguración Individuales de Pines
-	 */
+
 	//RST
 	hLCD.hLCD_GPIOx.Pin = RST_Pin_No;
  800068e:	2302      	movs	r3, #2
@@ -616,9 +614,7 @@ void LCD_SCREEN_HwInit(LCD_SCREEN_Handle_t hLCD)
  80006ce:	4829      	ldr	r0, [pc, #164]	; (8000774 <LCD_SCREEN_HwInit+0x104>)
  80006d0:	f002 fc1a 	bl	8002f08 <HAL_GPIO_Init>
 
-	/*
-	 * Configuración de Pines de Datos
-	 */
+
 
 	hLCD.hLCD_GPIOx.Pin = D0_Pin_No;
  80006d4:	f44f 7300 	mov.w	r3, #512	; 0x200
@@ -708,9 +704,9 @@ void LCD_SCREEN_HwInit(LCD_SCREEN_Handle_t hLCD)
  8000774:	40020000 	.word	0x40020000
 
 08000778 <LCD_SCREEN_Enable>:
-
 /*
- * Activación del PIN CS de la pantalla
+ * Function:
+ *   Setting the CS pin of the screen.
  */
 void  LCD_SCREEN_Enable(void)
 {
@@ -753,9 +749,9 @@ void  LCD_SCREEN_Enable(void)
  80007bc:	40020000 	.word	0x40020000
 
 080007c0 <LCD_SCREEN_Init>:
-/*
- * Inicialización hardware , además de reseteo y enable del pin. A todo eso también se le suma
- * la parametrización de la pantalla.
+ * Function:
+ * 	Initialization of the hardware and Initial parameters of the screen.
+ *
  */
 void LCD_SCREEN_Init(LCD_SCREEN_Handle_t hLCD)
 {
@@ -774,15 +770,17 @@ void LCD_SCREEN_Init(LCD_SCREEN_Handle_t hLCD)
  80007e2:	cb0f      	ldmia	r3, {r0, r1, r2, r3}
  80007e4:	f7ff ff44 	bl	8000670 <LCD_SCREEN_HwInit>
 
-	LCD_SCREEN_Reset();	//Reseteo de la pantalla por hardware
+	LCD_SCREEN_Reset();	//Hardware Reset
  80007e8:	f000 f814 	bl	8000814 <LCD_SCREEN_Reset>
-	LCD_SCREEN_Enable();//Habilitación PIN CS a 0
+	LCD_SCREEN_Enable();//Activation of CS(LOW level)
  80007ec:	f7ff ffc4 	bl	8000778 <LCD_SCREEN_Enable>
+
+
 	//SCREEN Initial Parameters Writing.
 	HAL_Delay(100);
  80007f0:	2064      	movs	r0, #100	; 0x64
  80007f2:	f001 fe85 	bl	8002500 <HAL_Delay>
-	LCD_SCREEN_WriteData(InitCmd,sizeof(InitCmd));
+	LCD_SCREEN_WriteData((short int*)InitCmd,sizeof(InitCmd));
  80007f6:	21ac      	movs	r1, #172	; 0xac
  80007f8:	4805      	ldr	r0, [pc, #20]	; (8000810 <LCD_SCREEN_Init+0x50>)
  80007fa:	f000 f837 	bl	800086c <LCD_SCREEN_WriteData>
@@ -798,9 +796,9 @@ void LCD_SCREEN_Init(LCD_SCREEN_Handle_t hLCD)
  8000810:	08004648 	.word	0x08004648
 
 08000814 <LCD_SCREEN_Reset>:
-
 /*
- * Comando para el reseteo de la pantalla
+ * Function:
+ * 	Hardware reset of the screen.
  */
 void  LCD_SCREEN_Reset(void)
 {
@@ -848,9 +846,9 @@ void  LCD_SCREEN_Reset(void)
  8000868:	40020000 	.word	0x40020000
 
 0800086c <LCD_SCREEN_WriteData>:
- * Escribir una secuencia de parametros o comandos a la pantalla
- * es recomendable usar un array, con la lista de comandos
- * y parametros consecutivos que queremos.
+ *  a new CMD, it's necessary to put a -1 between them. With this, the program knows that the next
+ *  number is a CMD and followed for parameters.
+ *
  */
 void  LCD_SCREEN_WriteData(short int *data,uint32_t lenght)
 {
@@ -946,9 +944,9 @@ void  LCD_SCREEN_WriteData(short int *data,uint32_t lenght)
  80008f4:	40020000 	.word	0x40020000
 
 080008f8 <LCD_SCREEN_WriteDataSingle>:
-
 /*
- * Escribir un comando o un paramétro en la pantalla
+ * Function:
+ *   This is a function for send only one CMD or data.
  */
 void  LCD_SCREEN_WriteDataSingle(uint8_t data,uint8_t CmdorData)
 {
@@ -1006,9 +1004,9 @@ void  LCD_SCREEN_WriteDataSingle(uint8_t data,uint8_t CmdorData)
  800094c:	40020000 	.word	0x40020000
 
 08000950 <LCD_SCREEN_Coordenates>:
-/*
- * Marcamos en la memoria, las coordenadas de origen y final
- * de lo que vamos a pintar.
+ *   Here we can put the coordinates for the crop and the size(HighxWidth) of where we want to paint,
+ *   and the size of it.
+ *
  */
 void LCD_SCREEN_Coordenates(uint16_t Xo,uint16_t Yo,uint16_t Xe,uint16_t Ye)
 {
@@ -1099,9 +1097,9 @@ void LCD_SCREEN_Coordenates(uint16_t Xo,uint16_t Yo,uint16_t Xe,uint16_t Ye)
  80009f4:	bd90      	pop	{r4, r7, pc}
 
 080009f6 <LCD_SCREEN_PaintColor>:
-
-/*
- * Escribimos colores entre las coordenadas marcadas
+ * Function:
+ *   This function is for paint some color in the coordinates that it was defined previously(LCD_SCREEN_Coordenates)
+ *   @NOTE:It's not finished yet, the number 100 of the loop, is temporary.
  */
 void LCD_SCREEN_PaintColor(void)
 {

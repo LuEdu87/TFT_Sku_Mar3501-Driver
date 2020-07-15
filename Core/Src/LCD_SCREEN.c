@@ -1,28 +1,39 @@
 #include "LCD_SCREEN.h"
 
 
-const short int InitCmd[86] = {0xF1,0x36,0x04,0x00,0x3C,0X0F,0x8F
-		   	   	,-1,0xF2,0x18,0xA3,0x12,0x02,0x02,0x12,0xFF,0x10,0x00
-				,-1,0xF8,0x21,0x04
-				,-1,0xF9,0x00,0x08
-				,-1,0xB4,0x00
-				,-1,0xC1,0x41
-				,-1,0xC5,0x00,0x91,0x80,0x00
-				,-1,0xE0,0x0F,0x1F,0x1C,0x0C,0x0F,0x08,0x48,0x98,0x37,0x0A,0x13,0x04,0x11,0x0D,0x00
-				,-1,0xE1,0x0F,0x32,0x2E,0x0B,0x0D,0x05,0x47,0x75,0x37,0x06,0x10,0x03,0x24,0x20,0x00
-				,-1,0x3A,0x55
+
+
+
+/*
+ * This array is for INIT parameters of the screen. Each line is a command and follow of parameters.
+ * for more information go to Reference manual of ILI9486 SKU_MAR3501  .
+ */
+const short int InitCmd[86] = {
+				  //CMD		//Parameters
+				    0xF1,   0x36,0x04,0x00,0x3C,0X0F,0x8F
+		   	   	,-1,0xF2,   0x18,0xA3,0x12,0x02,0x02,0x12,0xFF,0x10,0x00
+				,-1,0xF8,   0x21,0x04
+				,-1,0xF9,   0x00,0x08
+				,-1,0xB4,   0x00
+				,-1,0xC1,   0x41
+				,-1,0xC5,   0x00,0x91,0x80,0x00
+				,-1,0xE0,   0x0F,0x1F,0x1C,0x0C,0x0F,0x08,0x48,0x98,0x37,0x0A,0x13,0x04,0x11,0x0D,0x00
+				,-1,0xE1,   0x0F,0x32,0x2E,0x0B,0x0D,0x05,0x47,0x75,0x37,0x06,0x10,0x03,0x24,0x20,0x00
+				,-1,0x3A,   0x55
 				,-1,0x11
-				,-1,0xB1,0xA0,0x1F
-				,-1,0x36,0x28
+				,-1,0xB1,   0xA0,0x1F
+				,-1,0x36,   0x28
 				,-1,0x29
 };
 
 
-
+//Characters matrix
 extern const uint8_t characters[];
 
 
-
+/*------------------------------------------------------------------------------------------------------
+ * 						STATIC METHODS DEFINITION
+ ------------------------------------------------------------------------------------------------------*/
 static uint8_t LCD_SCREEN_MSBFound(uint32_t Value);
 static char	LCD_SCREEN_IntToChar(uint8_t Number);
 static uint8_t* LCD_SCREEN_FindCharacter(char Letter);
@@ -32,7 +43,10 @@ static void LCD_SCREEN_ConvertDatatoPins(uint8_t *datos);
 
 
 
-
+/*
+ * 	Function:
+ * 		This function is for see where is the first bit in the position of the value(32 bits).
+ */
 
 
 static uint8_t LCD_SCREEN_MSBFound(uint32_t Value)
@@ -40,7 +54,6 @@ static uint8_t LCD_SCREEN_MSBFound(uint32_t Value)
 	uint8_t MSBPosition=0,DivisorMSB;
 
 
-	//1.Primero sacamos la posición del bit MSB del valor.
 	for(int i=31;i>=0;i--)
 	{
 
@@ -52,19 +65,13 @@ static uint8_t LCD_SCREEN_MSBFound(uint32_t Value)
 	}
 
 
+	//Each position of the MSB for 10x multiplies, are at the same time multiplies of 3
+	//I calculate the ratios betweeen the position of MSB and 3.
 
 
-
-
-/*
- * Como la posición del MSB para los multiplos de 10, son a la vez multiplos de 3,
- * calculo el cocientre entre la posición del MSB y 3.
- */
-
-
-	if(Value>9)//Esto es para poder mostrar los Numeros correctamente del 10 al 15
+	if(Value>9)//This if for show the numbers between 10 and 15.
 	{
-		DivisorMSB=(MSBPosition)/3;	//Sacamos el divisor del MSB entre 3
+		DivisorMSB=(MSBPosition)/3;
 
 	}else
 	{
@@ -81,7 +88,8 @@ static uint8_t LCD_SCREEN_MSBFound(uint32_t Value)
 
 
 /*
- * Convertir el número entero de 0-9 en char.
+ * Funtion:
+ * 	This convert a number in ASCII code.
  */
 static char	LCD_SCREEN_IntToChar(uint8_t Number)
 {
@@ -98,8 +106,9 @@ static char	LCD_SCREEN_IntToChar(uint8_t Number)
 
 
 /*
- * Función que enlaza el archivo "Characters.c" que contiene el array
- * que describe las letras y numeros en la pantalla.
+ * Function:
+ * 	This is to connect the characters pixels matrix to the Letters you want to write in screen.
+ *
  */
 static uint8_t* LCD_SCREEN_FindCharacter(char Letter)
 {
@@ -216,7 +225,7 @@ static uint8_t* LCD_SCREEN_FindCharacter(char Letter)
 
 
 		/*-----------------------------------------
-		 * LETRAS MAYÚSCULAS
+		 * CAPS
 		 ------------------------------------------*/
 		case 'A':
 			return (uint8_t*)(characters+15*27);
@@ -322,7 +331,7 @@ static uint8_t* LCD_SCREEN_FindCharacter(char Letter)
 			return (uint8_t*)(characters+15*52);
 		break;
 		/*
-		 * NUMEROS DEL 0-9
+		 * NUMBERS 0-9
 		 */
 		 case '0':
 			return (uint8_t*)(characters+15*53);
@@ -404,7 +413,8 @@ static uint8_t* LCD_SCREEN_FindCharacter(char Letter)
 
 
 /*
- * Creación de flancos para el comando de escritura en la pantalla
+ * Function:
+ * 	Here we can make the toggling of the wr pin.
  */
 static void  LCD_SCREEN_Wr(void)
 {
@@ -415,19 +425,7 @@ static void  LCD_SCREEN_Wr(void)
 
 
 
-/*
- * Configuración de Pines para leer datos
- * de la entrada.
- */
-/*
-static void  LCD_SCREEN_Rd(void)
-{
-	char Nom;
 
-	Nom='c';
-	(void)Nom;
-}
-*/
 
 
 
@@ -435,13 +433,13 @@ static void  LCD_SCREEN_Rd(void)
 
 
 /*
- * Activamos los relojes para los distintos buses que tinen
- * los pines
+ * Function:
+ *  Activate the clocks of GPIO on the BUS.
  */
 
 static void LCD_SCREEN_ClkPinsEnable(void)
 {
-	//Activamos los relojes de los perifericos
+
 	__HAL_RCC_GPIOA_CLK_ENABLE();
 	__HAL_RCC_GPIOB_CLK_ENABLE();
 	__HAL_RCC_GPIOC_CLK_ENABLE();
@@ -453,9 +451,11 @@ static void LCD_SCREEN_ClkPinsEnable(void)
 
 
 /*
- * Esta función convierte la palabra
- * de entrada y la subdividie en cada
- * pin correspondiente.
+ * Function:
+ *  This function is to put each bit of the param or CMD in the correct pin of the LCD.
+ * @datos: value that you want to put in the pins (D0..D7)
+ *
+ *
  */
 static void LCD_SCREEN_ConvertDatatoPins(uint8_t *datos)
 {
@@ -476,20 +476,19 @@ static void LCD_SCREEN_ConvertDatatoPins(uint8_t *datos)
 
 
 /*
- * Configuración Hardware para los pines de control sobre la pantalla
- *
+ * Function:
+ * 	Hardware Pins Configuration for the SCREEN.
+ *  *
  */
 void LCD_SCREEN_HwInit(LCD_SCREEN_Handle_t hLCD)
 {
-	//Activación de parametros genericos de los pines @CAMBIAR : hay que poner el modo en otro sitio,para poder cambiar entre RD y WR
+
 	LCD_SCREEN_ClkPinsEnable();
 	hLCD.hLCD_GPIOx.Pull = GPIO_PULLUP;
 	hLCD.hLCD_GPIOx.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
 	hLCD.hLCD_GPIOx.Mode = GPIO_MODE_OUTPUT_PP;
 
-	/*
-	 * COnfiguración Individuales de Pines
-	 */
+
 	//RST
 	hLCD.hLCD_GPIOx.Pin = RST_Pin_No;
 	HAL_GPIO_Init(RST_GPIOx, &hLCD.hLCD_GPIOx);
@@ -506,9 +505,7 @@ void LCD_SCREEN_HwInit(LCD_SCREEN_Handle_t hLCD)
 	hLCD.hLCD_GPIOx.Pin = RD_Pin_No;
 	HAL_GPIO_Init(RD_GPIOx, &hLCD.hLCD_GPIOx);
 
-	/*
-	 * Configuración de Pines de Datos
-	 */
+
 
 	hLCD.hLCD_GPIOx.Pin = D0_Pin_No;
 	HAL_GPIO_Init(D0_GPIOx, &hLCD.hLCD_GPIOx);
@@ -547,7 +544,8 @@ void LCD_SCREEN_HwInit(LCD_SCREEN_Handle_t hLCD)
 
 
 /*
- * Activación del PIN CS de la pantalla
+ * Function:
+ *   Setting the CS pin of the screen.
  */
 void  LCD_SCREEN_Enable(void)
 {
@@ -567,18 +565,21 @@ void  LCD_SCREEN_Enable(void)
 
 
 /*
- * Inicialización hardware , además de reseteo y enable del pin. A todo eso también se le suma
- * la parametrización de la pantalla.
+ * Function:
+ * 	Initialization of the hardware and Initial parameters of the screen.
+ *
  */
 void LCD_SCREEN_Init(LCD_SCREEN_Handle_t hLCD)
 {
 	LCD_SCREEN_HwInit(hLCD);
 
-	LCD_SCREEN_Reset();	//Reseteo de la pantalla por hardware
-	LCD_SCREEN_Enable();//Habilitación PIN CS a 0
+	LCD_SCREEN_Reset();	//Hardware Reset
+	LCD_SCREEN_Enable();//Activation of CS(LOW level)
+
+
 	//SCREEN Initial Parameters Writing.
 	HAL_Delay(100);
-	LCD_SCREEN_WriteData(InitCmd,sizeof(InitCmd));
+	LCD_SCREEN_WriteData((short int*)InitCmd,sizeof(InitCmd));
 	HAL_Delay(100);
 }
 
@@ -587,7 +588,8 @@ void LCD_SCREEN_Init(LCD_SCREEN_Handle_t hLCD)
 
 
 /*
- * Desactivación del CS de la pantalla
+ * Function:
+ * 	Deactivate of the screen(CS High)
  */
 void  LCD_SCREEN_Disable(void)
 {
@@ -602,7 +604,8 @@ void  LCD_SCREEN_Disable(void)
 
 
 /*
- * Comando para el reseteo de la pantalla
+ * Function:
+ * 	Hardware reset of the screen.
  */
 void  LCD_SCREEN_Reset(void)
 {
@@ -622,9 +625,11 @@ void  LCD_SCREEN_Reset(void)
 
 
 /*
- * Escribir una secuencia de parametros o comandos a la pantalla
- * es recomendable usar un array, con la lista de comandos
- * y parametros consecutivos que queremos.
+ * Function:
+ *  In this function the goal is to send an array of CMD and parameters. When a parameters end and start a
+ *  a new CMD, it's necessary to put a -1 between them. With this, the program knows that the next
+ *  number is a CMD and followed for parameters.
+ *
  */
 void  LCD_SCREEN_WriteData(short int *data,uint32_t lenght)
 {
@@ -664,7 +669,8 @@ void  LCD_SCREEN_WriteData(short int *data,uint32_t lenght)
 
 
 /*
- * Escribir un comando o un paramétro en la pantalla
+ * Function:
+ *   This is a function for send only one CMD or data.
  */
 void  LCD_SCREEN_WriteDataSingle(uint8_t data,uint8_t CmdorData)
 {
@@ -690,8 +696,10 @@ void  LCD_SCREEN_WriteDataSingle(uint8_t data,uint8_t CmdorData)
 
 
 /*
- * Marcamos en la memoria, las coordenadas de origen y final
- * de lo que vamos a pintar.
+ * Function:
+ *   Here we can put the coordinates for the crop and the size(HighxWidth) of where we want to paint,
+ *   and the size of it.
+ *
  */
 void LCD_SCREEN_Coordenates(uint16_t Xo,uint16_t Yo,uint16_t Xe,uint16_t Ye)
 {
@@ -714,7 +722,9 @@ void LCD_SCREEN_Coordenates(uint16_t Xo,uint16_t Yo,uint16_t Xe,uint16_t Ye)
 
 
 /*
- * Escribimos colores entre las coordenadas marcadas
+ * Function:
+ *   This function is for paint some color in the coordinates that it was defined previously(LCD_SCREEN_Coordenates)
+ *   @NOTE:It's not finished yet, the number 100 of the loop, is temporary.
  */
 void LCD_SCREEN_PaintColor(void)
 {
@@ -731,21 +741,14 @@ void LCD_SCREEN_PaintColor(void)
 
 
 
-/*	//FALTA POR PROGRAMAR
- * Función para que devuelva parámetros de la pantalla.
- */
-void  LCD_SCREEN_ReadData(LCD_SCREEN_Handle_t hLCD_Scr,uint8_t Cmd)
-{
-
-}
-
-
 
 
 
 
 /*
- * Pintar Pixels en una zona determinada.
+ * Function:
+ *   In this function, the goal is to paint in a specific area. It's a combination of the 2 previous
+ *   function. Here you put the initial coordinates, the final coordinates and the color .
  */
 void LCD_SCREEN_PaintPixels(uint16_t Xo, uint16_t Yo, uint16_t Xf, uint16_t Yf, uint16_t Colours)
 {
@@ -766,7 +769,8 @@ void LCD_SCREEN_PaintPixels(uint16_t Xo, uint16_t Yo, uint16_t Xf, uint16_t Yf, 
 
 
 /*
- * Pintar Caracteres Fijos en una posición de la pantalla
+ * Function:
+ *   With this you can put numbers/letters on the screen. Beside the coordinates and color.
  */
 void LCD_SCREEN_PaintCharacters(uint16_t CoordX,uint16_t CoordY,char Letter[],uint16_t Colours, uint8_t size)
 {
@@ -812,15 +816,18 @@ void LCD_SCREEN_PaintCharacters(uint16_t CoordX,uint16_t CoordY,char Letter[],ui
 
 
 /*
- * Función para mostar valores de variables, tanto enteras(NO_COMA)
- * como variables float (COMA) en una posición de la pantalla
- * que queramos.
+ * Function:
+ *   The same as PaintCharacters, but using a variable as input.
+ *   @NOTE: if the variable is a float, it's necessary to put COMA and if it's not, NO_COMA
+ *   @this is important because the program need to know if the "Measure" value is one or other for the
+ *   @correct representation.
+ *
  */
 void LCD_SCREEN_PaintVariable(uint16_t CoordX,uint16_t CoordY,float Measure,uint16_t Colours, uint8_t Size,uint8_t ComaOrNoComa)
 {
 	uint8_t DivisorMSB;
 	uint32_t Millions,Decimals = 0;
-	char Valor[10]={0,0,0,0,0,0,0,0,0,0};		//Este array es para almacenar los valores que vamos sacando e cada numero
+	char Valor[10]={0,0,0,0,0,0,0,0,0,0};
 	unsigned int Value=0,i;
 
 
@@ -832,14 +839,14 @@ void LCD_SCREEN_PaintVariable(uint16_t CoordX,uint16_t CoordY,float Measure,uint
 	{
 
 		Value = Measure;
-		Decimals = (Measure-Value)*100;	//Cogemos los 2 primeros decimales y los pasamos a enteros
+		Decimals = (Measure-Value)*100;	//We take the 2 bigger decimals
 	}
 
 	DivisorMSB=LCD_SCREEN_MSBFound(Value);
 	Millions=pow(10,DivisorMSB);
 
-	//2.Sacar cocientes del número para buscarlos individualmente.
-		//Según la posición del MSB, se puede saber si el numero es 10000, 1000, 100, etc.
+	//2.Take the ratios and search it individually.
+	//According the position of the MSB, you can know if the number is 10000,1000,100,etc
 	for(i=0;i<(DivisorMSB+1);i++)	//
 	{
 		Valor[i]=LCD_SCREEN_IntToChar(Value/Millions);
@@ -861,5 +868,6 @@ void LCD_SCREEN_PaintVariable(uint16_t CoordX,uint16_t CoordY,float Measure,uint
 
 	LCD_SCREEN_PaintCharacters(CoordX, CoordY, Valor, Violeta, Size);
 }
+
 
 
