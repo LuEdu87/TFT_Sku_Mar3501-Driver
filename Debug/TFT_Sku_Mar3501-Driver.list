@@ -1139,9 +1139,9 @@ void LCD_SCREEN_PaintColor(void)
 	...
 
 08000a30 <LCD_SD_SPISoftInit>:
-
-
-
+ * Function:
+ * 	SPI protocol configuration
+ */
 
 static void LCD_SD_SPISoftInit(LCD_SD_Handle_it *hLCD)
 {
@@ -1222,8 +1222,8 @@ static void LCD_SD_SPISoftInit(LCD_SD_Handle_it *hLCD)
 
 08000ac0 <LCD_SD_SPIHwInit>:
 /*
- * Habilitación del reloj y configuración de los Pines de SPI como
- * alternate function.
+ * Function:
+ * 	Hardware and clock configuration for SPI communication.
  */
 static void LCD_SD_SPIHwInit(SPI_HandleTypeDef *hspi)
 {
@@ -1243,9 +1243,9 @@ static void LCD_SD_SPIHwInit(SPI_HandleTypeDef *hspi)
 	...
 
 08000ad8 <LCD_SD_ReadFileData>:
-
-
-
+ * Function:
+ * 	Function to read the data store inside of SD card..
+ */
 
 static void LCD_SD_ReadFileData(LCD_SD_Handle_it *hLCD,uint32_t FileStartAddress1,uint32_t AmountofBytes)
 {
@@ -1289,7 +1289,7 @@ static void LCD_SD_ReadFileData(LCD_SD_Handle_it *hLCD,uint32_t FileStartAddress
  8000b2e:	f887 302a 	strb.w	r3, [r7, #42]	; 0x2a
  8000b32:	2300      	movs	r3, #0
  8000b34:	f887 302b 	strb.w	r3, [r7, #43]	; 0x2b
-	uint8_t CMD12[]	=	{SD_CMD12,0x00,0x00,0x00,0x00,SD_CRC_NO,0x00,0x00};//Buscamos la dirección 0 del SD
+	uint8_t CMD12[]	=	{SD_CMD12,0x00,0x00,0x00,0x00,SD_CRC_NO,0x00,0x00};
  8000b38:	4a36      	ldr	r2, [pc, #216]	; (8000c14 <LCD_SD_ReadFileData+0x13c>)
  8000b3a:	f107 031c 	add.w	r3, r7, #28
  8000b3e:	e892 0003 	ldmia.w	r2, {r0, r1}
@@ -1420,10 +1420,10 @@ static void LCD_SD_ReadFileData(LCD_SD_Handle_it *hLCD,uint32_t FileStartAddress
  8000c18:	080008f9 	.word	0x080008f9
 
 08000c1c <LCD_SD_FindFile>:
-
-
-
-
+ * Function:
+ * 	This function is for search the file that we want to read. This part will read the table of files and try
+ *  to find it.
+ */
 static uint16_t LCD_SD_FindFile(LCD_SD_Handle_it *hLCD,char FileNameOut[],uint32_t SizeName)
 {
  8000c1c:	b5b0      	push	{r4, r5, r7, lr}
@@ -1481,7 +1481,7 @@ static uint16_t LCD_SD_FindFile(LCD_SD_Handle_it *hLCD,char FileNameOut[],uint32
  8000c90:	623b      	str	r3, [r7, #32]
  8000c92:	e019      	b.n	8000cc8 <LCD_SD_FindFile+0xac>
 	{
-		if((FileName[i]>0x60)&&(FileName[i]<0x7B))	//Si la letra en codigo ascii está entre esos valores, es minuscula
+		if((FileName[i]>0x60)&&(FileName[i]<0x7B))	//if the value is between this range, is a low letter
  8000c94:	693a      	ldr	r2, [r7, #16]
  8000c96:	6a3b      	ldr	r3, [r7, #32]
  8000c98:	4413      	add	r3, r2
@@ -1495,7 +1495,7 @@ static uint16_t LCD_SD_FindFile(LCD_SD_Handle_it *hLCD,char FileNameOut[],uint32
  8000ca8:	2b7a      	cmp	r3, #122	; 0x7a
  8000caa:	d80a      	bhi.n	8000cc2 <LCD_SD_FindFile+0xa6>
 		{
-			FileName[i]=FileName[i]-32;		//Esto convierte la minuscula en mayuscula. Mirar Tabla ASCII Hex.
+			FileName[i]=FileName[i]-32;		//This convert the low letter in CAPS using ASCII table.
  8000cac:	693a      	ldr	r2, [r7, #16]
  8000cae:	6a3b      	ldr	r3, [r7, #32]
  8000cb0:	4413      	add	r3, r2
@@ -1529,7 +1529,7 @@ static uint16_t LCD_SD_FindFile(LCD_SD_Handle_it *hLCD,char FileNameOut[],uint32
  8000cde:	4619      	mov	r1, r3
  8000ce0:	68f8      	ldr	r0, [r7, #12]
  8000ce2:	f000 fd24 	bl	800172e <LCD_SD_READSector>
-			//Aquí buscamos el formato del archivo, en mayusculas
+			//Here search the format of the file.
 		for(int i=8;i<sizeof(hLCD->SDhandle.ReceiveBytesSector);i+=32)
  8000ce6:	2308      	movs	r3, #8
  8000ce8:	61fb      	str	r3, [r7, #28]
@@ -1573,7 +1573,7 @@ static uint16_t LCD_SD_FindFile(LCD_SD_Handle_it *hLCD,char FileNameOut[],uint32
  8000d30:	61bb      	str	r3, [r7, #24]
  8000d32:	e02e      	b.n	8000d92 <LCD_SD_FindFile+0x176>
 				{
-					if((hLCD->SDhandle.ReceiveBytesSector[(i-8)]==FileName[0]))	//El primer caracter de la imagen debe coincidir, independientemente de que los demas sean espacios
+					if((hLCD->SDhandle.ReceiveBytesSector[(i-8)]==FileName[0]))	//The first character has to be the same.
  8000d34:	69fb      	ldr	r3, [r7, #28]
  8000d36:	3b08      	subs	r3, #8
  8000d38:	68fa      	ldr	r2, [r7, #12]
@@ -1583,7 +1583,7 @@ static uint16_t LCD_SD_FindFile(LCD_SD_Handle_it *hLCD,char FileNameOut[],uint32
  8000d40:	429a      	cmp	r2, r3
  8000d42:	d11f      	bne.n	8000d84 <LCD_SD_FindFile+0x168>
 					{
-						if((hLCD->SDhandle.ReceiveBytesSector[j+(i-8)]==FileName[j])||(hLCD->SDhandle.ReceiveBytesSector[j+(i-8)]==' ')) //Comparamos el resto de caracteres, pueden ser iguales al nombre o pueden ser espacios
+						if((hLCD->SDhandle.ReceiveBytesSector[j+(i-8)]==FileName[j])||(hLCD->SDhandle.ReceiveBytesSector[j+(i-8)]==' '))
  8000d44:	69fb      	ldr	r3, [r7, #28]
  8000d46:	f1a3 0208 	sub.w	r2, r3, #8
  8000d4a:	69bb      	ldr	r3, [r7, #24]
@@ -1763,10 +1763,10 @@ static uint16_t LCD_SD_FindFile(LCD_SD_Handle_it *hLCD,char FileNameOut[],uint32
 	...
 
 08000e88 <LCD_SD_Mounting>:
-
-
-
-
+ * Function:
+ * 	Process to mount the SD card, using the steps in the SD card procotol for prepare it.
+ * 	@for more information, you should read the SD card IDLE state in the reference manual.
+ */
 static uint8_t LCD_SD_Mounting(LCD_SD_Handle_it *hLCD)
 {
  8000e88:	b580      	push	{r7, lr}
@@ -1962,10 +1962,10 @@ static uint8_t LCD_SD_Mounting(LCD_SD_Handle_it *hLCD)
  8001028:	08004564 	.word	0x08004564
 
 0800102c <LCD_SD_FindFilesDirectory>:
-
-
-
-
+/*
+ * Function:
+ * 		As before, this function is to find the directory file. Where are all the files location.
+ */
 static void LCD_SD_FindFilesDirectory(LCD_SD_Handle_it *hLCD)
 {
  800102c:	b580      	push	{r7, lr}
@@ -2155,16 +2155,17 @@ static void LCD_SD_FindFilesDirectory(LCD_SD_Handle_it *hLCD)
 	...
 
 0800117c <LCD_SD_FindPartitionTable>:
-
-
-
+/*
+ * Function:
+ * 	In this case the function will try to find the partition table, where are all the data of the sd card.
+ */
 static void LCD_SD_FindPartitionTable(LCD_SD_Handle_it *hLCD)
 {
  800117c:	b580      	push	{r7, lr}
  800117e:	b086      	sub	sp, #24
  8001180:	af00      	add	r7, sp, #0
  8001182:	6078      	str	r0, [r7, #4]
-	uint8_t CMD17[]={SD_CMD17,0x00,0x00,0x00,0x00,SD_CRC_NO,0x00,0x00};//Buscamos la dirección 0 del SD
+	uint8_t CMD17[]={SD_CMD17,0x00,0x00,0x00,0x00,SD_CRC_NO,0x00,0x00};
  8001184:	4a1f      	ldr	r2, [pc, #124]	; (8001204 <LCD_SD_FindPartitionTable+0x88>)
  8001186:	f107 0310 	add.w	r3, r7, #16
  800118a:	e892 0003 	ldmia.w	r2, {r0, r1}
@@ -2232,8 +2233,9 @@ static void LCD_SD_FindPartitionTable(LCD_SD_Handle_it *hLCD)
  8001204:	0800456c 	.word	0x0800456c
 
 08001208 <LCD_SD_SPISend>:
-
-
+ * Function:
+ * 	An easy way to send data through the SPI protocol to SD Reader.
+ */
 
 static void LCD_SD_SPISend(LCD_SD_Handle_it *hLCD, uint8_t *PtCmd, uint8_t *PtCmdAns,uint32_t Size)
 {
@@ -2262,9 +2264,10 @@ static void LCD_SD_SPISend(LCD_SD_Handle_it *hLCD, uint8_t *PtCmd, uint8_t *PtCm
  8001234:	bd80      	pop	{r7, pc}
 
 08001236 <LCD_SD_SPIReceive>:
-
-
-
+/*
+ * Function:
+ * 	An easy way to receive data through the SPI protocol from SD Reader.
+ */
 static void LCD_SD_SPIReceive(LCD_SD_Handle_it *hLCD, uint8_t *PtData,uint32_t Size)
 {
  8001236:	b580      	push	{r7, lr}
@@ -2288,10 +2291,10 @@ static void LCD_SD_SPIReceive(LCD_SD_Handle_it *hLCD, uint8_t *PtData,uint32_t S
  800125a:	bd80      	pop	{r7, pc}
 
 0800125c <LCD_SD_SPIEmptyCycles>:
-
-
-
-
+/*
+ * Function:
+ *   This is a simple empty cycles to make a delay between messages. Because it needs a delay between SPI messages.
+ */
 static void LCD_SD_SPIEmptyCycles(LCD_SD_Handle_it *hLCD)
 {
  800125c:	b580      	push	{r7, lr}
@@ -2341,9 +2344,10 @@ static void LCD_SD_SPIEmptyCycles(LCD_SD_Handle_it *hLCD)
  80012a4:	08004574 	.word	0x08004574
 
 080012a8 <LCD_SD_SPIReceive_IT>:
-
-
-
+/*
+ * Function:
+ *	In this case I recycled a HAL process of SPI protocol, and modify it, to write the pins in the screen.
+ */
 static HAL_StatusTypeDef LCD_SD_SPIReceive_IT(SPI_HandleTypeDef *hspi,void (*WrPins)(uint8_t,uint8_t),uint8_t *pTxData, uint8_t *pRxData, uint32_t Size, uint32_t Timeout)
 {
  80012a8:	b580      	push	{r7, lr}
@@ -2930,11 +2934,7 @@ void HAL_SPI_MspInit(SPI_HandleTypeDef *hspi)
  8001622:	f003 0302 	and.w	r3, r3, #2
  8001626:	60bb      	str	r3, [r7, #8]
  8001628:	68bb      	ldr	r3, [r7, #8]
-	    /**SPI1 GPIO Configuration
-	    PA5     ------> SPI1_SCK
-	    PA6     ------> SPI1_MISO
-	    PA7     ------> SPI1_MOSI
-	    */
+
 	    GPIO_InitStruct.Pin = SPI_SD_SCK|SPI_SD_MISO|SPI_SD_MOSI;
  800162a:	23e0      	movs	r3, #224	; 0xe0
  800162c:	617b      	str	r3, [r7, #20]
@@ -2956,7 +2956,7 @@ void HAL_SPI_MspInit(SPI_HandleTypeDef *hspi)
  8001644:	480a      	ldr	r0, [pc, #40]	; (8001670 <HAL_SPI_MspInit+0xbc>)
  8001646:	f001 fc5f 	bl	8002f08 <HAL_GPIO_Init>
 
-	    //Configuración SS pin.
+
 	    GPIO_InitStruct.Pin = SPI_SD_SS;
  800164a:	2340      	movs	r3, #64	; 0x40
  800164c:	617b      	str	r3, [r7, #20]
@@ -2983,10 +2983,10 @@ void HAL_SPI_MspInit(SPI_HandleTypeDef *hspi)
  8001674:	40020400 	.word	0x40020400
 
 08001678 <LCD_SD_Init>:
-
-
-
-
+/*
+ * Function:
+ * 	Combination of previous function to Init the SD card
+ */
 void LCD_SD_Init(LCD_SD_Handle_it *hLCD)
 {
  8001678:	b580      	push	{r7, lr}
@@ -3014,10 +3014,10 @@ void LCD_SD_Init(LCD_SD_Handle_it *hLCD)
  80016a4:	40020400 	.word	0x40020400
 
 080016a8 <LCD_SD_Mount>:
-
-
-
-
+/*
+ * Function:
+ * 	Combination of previous function to mount the SD card on the ucontroller.
+ */
 uint8_t LCD_SD_Mount(LCD_SD_Handle_it *hLCD)
 {
  80016a8:	b580      	push	{r7, lr}
@@ -3048,7 +3048,10 @@ uint8_t LCD_SD_Mount(LCD_SD_Handle_it *hLCD)
  80016d0:	bd80      	pop	{r7, pc}
 
 080016d2 <LCD_SD_Begin>:
-
+/*
+ * Function:
+ * 	UNUSED.
+ */
 void LCD_SD_Begin(LCD_SD_Handle_it *hLCD)
 {
  80016d2:	b480      	push	{r7}
@@ -3064,7 +3067,10 @@ void LCD_SD_Begin(LCD_SD_Handle_it *hLCD)
  80016e4:	4770      	bx	lr
 
 080016e6 <LCD_SD_FileOpen>:
-
+/*
+ * Function:
+ * 	Here we can search for the file in the SD card.
+ */
 uint8_t LCD_SD_FileOpen(LCD_SD_Handle_it *hLCD,char FileName[])
 {
  80016e6:	b580      	push	{r7, lr}
@@ -3113,10 +3119,10 @@ uint8_t LCD_SD_FileOpen(LCD_SD_Handle_it *hLCD,char FileName[])
  800172c:	bd80      	pop	{r7, pc}
 
 0800172e <LCD_SD_READSector>:
-/*
- * Esta función se encarga de buscar en el sector 0 y desués en la tabla de particiones, hasta
- * encontrar el directorio de archivos.
+ * 	This function search the sector 0 and after that try to find the partition table. When it find it, look
+ * 	in the file's directory.
  */
+
 void LCD_SD_READSector(LCD_SD_Handle_it *hLCD,uint32_t SectorNumber)
 {
  800172e:	b580      	push	{r7, lr}
