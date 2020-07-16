@@ -27,6 +27,3 @@ The touchpad in this shield is really easy. You'll change some pin configuration
 NOTE: The problem with this panel ,is the screen and touchn share pins, so you can't put an interruption to break the Screen process. For example, if the screen is painting, the touch panel is disabled until the screen finish.
 Probably in the future I would put an RTOS system to alternate between paint and touch.
 
-##Images
-
-![LCD_Shield]()
