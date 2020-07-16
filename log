@@ -1,0 +1,89 @@
+[33mcommit 7b6b3b735e4ec923691503bad6a5a55a67439a9c[m[33m ([m[1;36mHEAD -> [m[1;32mNewImagesTesting[m[33m)[m
+Author: LuEdu87 <87leel@gmail.com>
+Date:   Wed Jul 15 23:22:55 2020 +0200
+
+    LCD_SD.h and LCD_SD.c comments ended
+
+[33mcommit ec32cc648ba9dab15d9f710c62267265687a3ea4[m
+Author: LuEdu87 <87leel@gmail.com>
+Date:   Wed Jul 15 22:41:26 2020 +0200
+
+    LCD_TOUCHSCREEN.c AND LCD_TOUCHSCREEN.h comments complete
+
+[33mcommit b732cb777f6db4423d69e0a29b863ac698534579[m
+Author: LuEdu87 <87leel@gmail.com>
+Date:   Wed Jul 15 21:01:30 2020 +0200
+
+    Uploading test 1
+
+[33mcommit cc5295a86b2efc49a467466938c779abefa7d2fa[m
+Author: LuEdu87 <87leel@gmail.com>
+Date:   Wed Jul 15 20:46:23 2020 +0200
+
+    Comments about LCD_SCREEN 3
+
+[33mcommit 9b5984d22325f8b06c834ee4a886b3905aebfe1f[m
+Author: Eduardo <60631825+LuEdu87@users.noreply.github.com>
+Date:   Wed Jul 15 21:36:21 2020 +0200
+
+    Create README.md
+
+[33mcommit a73e75617fb3b8a12aacc8e2d21ae3e55e00d53a[m
+Author: Eduardo <60631825+LuEdu87@users.noreply.github.com>
+Date:   Wed Jul 15 21:34:20 2020 +0200
+
+    Update LCD_SCREEN.c
+
+[33mcommit 164b0d3921f4052e7ae47c9d13f7be24879a2263[m
+Author: Eduardo <60631825+LuEdu87@users.noreply.github.com>
+Date:   Wed Jul 15 21:32:28 2020 +0200
+
+    Update LCD_SCREEN.c
+
+[33mcommit 3cd6be89043908d5d6a30ecf41010f38ca041a31[m
+Author: LuEdu87 <87leel@gmail.com>
+Date:   Wed Jul 15 20:30:33 2020 +0200
+
+    Test 5
+
+[33mcommit d0f4e1b92dcc0ebfccf0e9fd6e8352c99fa4e869[m
+Author: LuEdu87 <87leel@gmail.com>
+Date:   Wed Jul 15 20:27:49 2020 +0200
+
+    Test 3 comments
+
+[33mcommit 551212d2a33d13ccba3ea7d98073937081d18f6c[m
+Author: LuEdu87 <87leel@gmail.com>
+Date:   Wed Jul 15 20:24:17 2020 +0200
+
+    Test 2
+
+[33mcommit bf74ca9f1f7ed936bd988b7fde3932c8c7505279[m
+Author: LuEdu87 <87leel@gmail.com>
+Date:   Wed Jul 15 20:19:48 2020 +0200
+
+    LCD_SCREEN comments finished 2
+
+[33mcommit b27936bd2aaf86bcc608f9c2afd3e1c11175350f[m
+Author: LuEdu87 <87leel@gmail.com>
+Date:   Wed Jul 15 20:13:13 2020 +0200
+
+    Comments of LCD_SCREEN.h and LCD_SCREEN.c finished
+
+[33mcommit 8cf7450ae2a771d2168c4a57f69b32048506a759[m
+Author: LuEdu87 <87leel@gmail.com>
+Date:   Sat May 9 13:56:14 2020 +0200
+
+    Incluyendo todo el proyecto en el reposirotio
+
+[33mcommit 70a5b74fb7220d670bfc56dc5fdb370d7bc405db[m
+Author: LuEdu87 <87leel@gmail.com>
+Date:   Sat May 9 12:58:53 2020 +0200
+
+    Inicio Repositorio: Cargo Carpeta Driver y Core
+
+[33mcommit a0ff487c648b7370c84443cf7e63332b4085679d[m
+Author: LuEdu87 <60631825+LuEdu87@users.noreply.github.com>
+Date:   Sat May 9 13:10:22 2020 +0200
+
+    Initial commit

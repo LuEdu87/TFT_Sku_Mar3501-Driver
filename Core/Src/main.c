@@ -71,7 +71,10 @@ char *FileSD[]={"Cortinas_Kurumi.bin",
 				"Clock_Kurumi.bin",
 				"Shh_Kurumi.bin",
 				"Ero_Kurumi.bin",
-				"Nurse_kurumi.bin"
+				"Nurse_kurumi.bin",
+				"Super_coche.bin",
+				"Super_ciudad.bin",
+				"Super_universo.bin"
 				};
 
 
