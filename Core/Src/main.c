@@ -62,20 +62,11 @@ LCD_SD_Handle_it hsd;
 LCD_Touchscreen_it htch;
 
 
-char *FileSD[]={"Cortinas_Kurumi.bin",
-				"Toalla_Kurumi.bin",
-				"Cuerdas_Kurumi.bin",
-				"Escor_Kurumi.bin",
-				"Sofa_Kurumi.bin",
-				"School_Kurumi.bin",
-				"Clock_Kurumi.bin",
-				"Shh_Kurumi.bin",
-				"Ero_Kurumi.bin",
-				"Nurse_kurumi.bin",
-				"Super_coche.bin",
+
+char *FileSD[]={"Super_coche.bin",
 				"Super_ciudad.bin",
 				"Super_universo.bin"
-				};
+};
 
 
 
@@ -162,6 +153,7 @@ int main(void)
 	LCD_SD_Mount(&hsd);
 	LCD_SD_Begin(&hsd);
 	Valor=sizeof(FileSD)/sizeof(FileSD[0]);
+	//Valor=sizeof(FileSD);
 
 
 	while(1)

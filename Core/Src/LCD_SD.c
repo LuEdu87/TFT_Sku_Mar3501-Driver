@@ -167,6 +167,8 @@ static uint16_t LCD_SD_FindFile(LCD_SD_Handle_it *hLCD,char FileNameOut[],uint32
 		}
 	}
 
+
+#warning TODO: It needs a part where if the file doesnt  exist return a value.
 	while(hLCD->SDhandle.FileFound!=1)
 	{
 		LCD_SD_READSector(hLCD, hLCD->SDhandle.FileDirectory+LoopCounter);
@@ -378,7 +380,7 @@ static void LCD_SD_SPISend(LCD_SD_Handle_it *hLCD, uint8_t *PtCmd, uint8_t *PtCm
  */
 static void LCD_SD_SPIReceive(LCD_SD_Handle_it *hLCD, uint8_t *PtData,uint32_t Size)
 {
-	HAL_SPI_Receive(&hLCD->hspi1, PtData, Size, 0xFF);
+	HAL_SPI_Receive(&hLCD->hspi1, (uint8_t*)PtData, Size, 0xFF);
 }
 
 
@@ -653,7 +655,7 @@ void LCD_SD_Begin(LCD_SD_Handle_it *hLCD)
  */
 uint8_t LCD_SD_FileOpen(LCD_SD_Handle_it *hLCD,char FileName[])
 {
-
+	HAL_Delay(50);
 	if(LCD_SD_FindFile(hLCD,FileName,strlen(FileName))&1)
 	{
 
@@ -678,21 +680,23 @@ uint8_t LCD_SD_FileOpen(LCD_SD_Handle_it *hLCD,char FileName[])
 void LCD_SD_READSector(LCD_SD_Handle_it *hLCD,uint32_t SectorNumber)
 {
 		uint32_t SectorAddress= SectorNumber*hLCD->SDhandle.BytesPerSector;
-
 		uint8_t CMD17[]={SD_CMD17,(uint8_t)(SectorAddress>>24),(uint8_t)(SectorAddress>>16),(uint8_t)(SectorAddress>>8),(uint8_t)SectorAddress,SD_CRC_NO,0x00,0x00};//Buscamos la dirección 0 del SD
 		uint8_t ReceiveAns[8] = {0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
 		memset(hLCD->SDhandle.ReceiveBytesSector,0,sizeof(hLCD->SDhandle.ReceiveBytesSector));
 
 
 		LCD_SD_SPIEmptyCycles(hLCD);
+
 		LCD_SD_SPISend(hLCD,(uint8_t*)CMD17,(uint8_t*)ReceiveAns, sizeof(CMD17));
 
 		while(ReceiveAns[0] != 0xFE)
 		{
-			LCD_SD_SPIReceive(hLCD, ReceiveAns, 1);
+			LCD_SD_SPIReceive(hLCD,(uint8_t*)ReceiveAns, 1);
+
 		}
 
 		LCD_SD_SPIReceive(hLCD, (uint8_t*)hLCD->SDhandle.ReceiveBytesSector, sizeof(hLCD->SDhandle.ReceiveBytesSector));
+
 
 
 }
