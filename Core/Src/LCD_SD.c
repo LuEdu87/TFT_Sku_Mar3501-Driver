@@ -682,17 +682,25 @@ void LCD_SD_READSector(LCD_SD_Handle_it *hLCD,uint32_t SectorNumber)
 		uint32_t SectorAddress= SectorNumber*hLCD->SDhandle.BytesPerSector;
 		uint8_t CMD17[]={SD_CMD17,(uint8_t)(SectorAddress>>24),(uint8_t)(SectorAddress>>16),(uint8_t)(SectorAddress>>8),(uint8_t)SectorAddress,SD_CRC_NO,0x00,0x00};//Buscamos la dirección 0 del SD
 		uint8_t ReceiveAns[8] = {0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
+		uint8_t Itries = 0;
 		memset(hLCD->SDhandle.ReceiveBytesSector,0,sizeof(hLCD->SDhandle.ReceiveBytesSector));
 
 
 		LCD_SD_SPIEmptyCycles(hLCD);
 
 		LCD_SD_SPISend(hLCD,(uint8_t*)CMD17,(uint8_t*)ReceiveAns, sizeof(CMD17));
-
+		HAL_Delay(5);
 		while(ReceiveAns[0] != 0xFE)
 		{
 			LCD_SD_SPIReceive(hLCD,(uint8_t*)ReceiveAns, 1);
+			Itries +=1;
 
+			if(Itries>150)
+			{
+				Itries = 0;
+				LCD_SD_SPISend(hLCD,(uint8_t*)CMD17,(uint8_t*)ReceiveAns, sizeof(CMD17));
+				HAL_Delay(5);
+			}
 		}
 
 		LCD_SD_SPIReceive(hLCD, (uint8_t*)hLCD->SDhandle.ReceiveBytesSector, sizeof(hLCD->SDhandle.ReceiveBytesSector));

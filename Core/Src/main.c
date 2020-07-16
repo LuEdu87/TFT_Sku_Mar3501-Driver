@@ -63,9 +63,9 @@ LCD_Touchscreen_it htch;
 
 
 
-char *FileSD[]={"Super_coche.bin",
-				"Super_ciudad.bin",
-				"Super_universo.bin"
+char *FileSD[]={"ciudad_Super.bin",
+				"coche_Super.bin",
+				"universo_Super.bin"
 };
 
 
