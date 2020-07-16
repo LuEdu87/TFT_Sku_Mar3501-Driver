@@ -7,43 +7,43 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
   1 .text         0000436c  080001c4  080001c4  000101c4  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .rodata       00000154  08004530  08004530  00014530  2**2
+  2 .rodata       00000144  08004530  08004530  00014530  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  3 .ARM.extab    00000000  08004684  08004684  00020018  2**0
+  3 .ARM.extab    00000000  08004674  08004674  00020018  2**0
                   CONTENTS
-  4 .ARM          00000008  08004684  08004684  00014684  2**2
+  4 .ARM          00000008  08004674  08004674  00014674  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  5 .preinit_array 00000000  0800468c  0800468c  00020018  2**0
+  5 .preinit_array 00000000  0800467c  0800467c  00020018  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  6 .init_array   00000004  0800468c  0800468c  0001468c  2**2
+  6 .init_array   00000004  0800467c  0800467c  0001467c  2**2
                   CONTENTS, ALLOC, LOAD, DATA
-  7 .fini_array   00000004  08004690  08004690  00014690  2**2
+  7 .fini_array   00000004  08004680  08004680  00014680  2**2
                   CONTENTS, ALLOC, LOAD, DATA
-  8 .data         00000018  20000000  08004694  00020000  2**2
+  8 .data         00000018  20000000  08004684  00020000  2**2
                   CONTENTS, ALLOC, LOAD, DATA
-  9 .bss          00000340  20000018  080046ac  00020018  2**2
+  9 .bss          00000340  20000018  0800469c  00020018  2**2
                   ALLOC
- 10 ._user_heap_stack 00000600  20000358  080046ac  00020358  2**0
+ 10 ._user_heap_stack 00000600  20000358  0800469c  00020358  2**0
                   ALLOC
  11 .ARM.attributes 00000030  00000000  00000000  00020018  2**0
                   CONTENTS, READONLY
- 12 .debug_info   0000bb30  00000000  00000000  00020048  2**0
+ 12 .debug_info   0000ba60  00000000  00000000  00020048  2**0
                   CONTENTS, READONLY, DEBUGGING
- 13 .debug_abbrev 00001d50  00000000  00000000  0002bb78  2**0
+ 13 .debug_abbrev 00001d09  00000000  00000000  0002baa8  2**0
                   CONTENTS, READONLY, DEBUGGING
- 14 .debug_aranges 000008f0  00000000  00000000  0002d8c8  2**3
+ 14 .debug_aranges 000008e8  00000000  00000000  0002d7b8  2**3
                   CONTENTS, READONLY, DEBUGGING
- 15 .debug_ranges 00000808  00000000  00000000  0002e1b8  2**3
+ 15 .debug_ranges 00000800  00000000  00000000  0002e0a0  2**3
                   CONTENTS, READONLY, DEBUGGING
- 16 .debug_macro  000215bf  00000000  00000000  0002e9c0  2**0
+ 16 .debug_macro  000215bf  00000000  00000000  0002e8a0  2**0
                   CONTENTS, READONLY, DEBUGGING
- 17 .debug_line   00008c1a  00000000  00000000  0004ff7f  2**0
+ 17 .debug_line   00008bb0  00000000  00000000  0004fe5f  2**0
                   CONTENTS, READONLY, DEBUGGING
- 18 .debug_str    000ccc8c  00000000  00000000  00058b99  2**0
+ 18 .debug_str    000ccc70  00000000  00000000  00058a0f  2**0
                   CONTENTS, READONLY, DEBUGGING
- 19 .comment      0000007b  00000000  00000000  00125825  2**0
+ 19 .comment      0000007b  00000000  00000000  0012567f  2**0
                   CONTENTS, READONLY
- 20 .debug_frame  000023c4  00000000  00000000  001258a0  2**2
+ 20 .debug_frame  0000239c  00000000  00000000  001256fc  2**2
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -793,7 +793,7 @@ void LCD_SCREEN_Init(LCD_SCREEN_Handle_t hLCD)
  8000808:	e8bd 4080 	ldmia.w	sp!, {r7, lr}
  800080c:	b004      	add	sp, #16
  800080e:	4770      	bx	lr
- 8000810:	080045c8 	.word	0x080045c8
+ 8000810:	080045b8 	.word	0x080045b8
 
 08000814 <LCD_SCREEN_Reset>:
 /*
@@ -4497,8 +4497,7 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
  80020da:	f000 f8cd 	bl	8002278 <MX_GPIO_Init>
-//  MX_ADC1_Init();
-  //MX_SPI1_Init();
+
   /* USER CODE BEGIN 2 */
   LCD_SCREEN_Init(hlcd);
  80020de:	4b2b      	ldr	r3, [pc, #172]	; (800218c <main+0xcc>)
@@ -4524,61 +4523,61 @@ int main(void)
  8002108:	2100      	movs	r1, #0
  800210a:	2000      	movs	r0, #0
  800210c:	f7fe fc20 	bl	8000950 <LCD_SCREEN_Coordenates>
+ 
+ 
 
-
-
-
-
-	LCD_SD_Mount(&hsd);
+  /* Infinite loop */
+  /* USER CODE BEGIN WHILE */
+  LCD_SD_Mount(&hsd);
  8002110:	4820      	ldr	r0, [pc, #128]	; (8002194 <main+0xd4>)
  8002112:	f7ff fac9 	bl	80016a8 <LCD_SD_Mount>
-	LCD_SD_Begin(&hsd);
+  	LCD_SD_Begin(&hsd);
  8002116:	481f      	ldr	r0, [pc, #124]	; (8002194 <main+0xd4>)
  8002118:	f7ff fadb 	bl	80016d2 <LCD_SD_Begin>
-	Valor=sizeof(FileSD)/sizeof(FileSD[0]);
+  	Valor=sizeof(FileSD)/sizeof(FileSD[0]);
  800211c:	2303      	movs	r3, #3
  800211e:	807b      	strh	r3, [r7, #2]
 
 
-	while(1)
-	{
+  	while(1)
+  	{
 
-		Almacen = 0;
+  		Almacen = 0;
  8002120:	2300      	movs	r3, #0
  8002122:	80bb      	strh	r3, [r7, #4]
-		LCD_SD_FileOpen(&hsd, FileSD[i]);
+  		LCD_SD_FileOpen(&hsd, FileSD[i]);
  8002124:	f997 3007 	ldrsb.w	r3, [r7, #7]
  8002128:	4a1b      	ldr	r2, [pc, #108]	; (8002198 <main+0xd8>)
  800212a:	f852 3023 	ldr.w	r3, [r2, r3, lsl #2]
  800212e:	4619      	mov	r1, r3
  8002130:	4818      	ldr	r0, [pc, #96]	; (8002194 <main+0xd4>)
  8002132:	f7ff fad8 	bl	80016e6 <LCD_SD_FileOpen>
-		while(Almacen<6)
+  		while(Almacen<6)
  8002136:	e004      	b.n	8002142 <main+0x82>
-		{
-			Almacen=LCD_Touch_CoorX(&htch);
+  		{
+  			Almacen=LCD_Touch_CoorX(&htch);
  8002138:	4815      	ldr	r0, [pc, #84]	; (8002190 <main+0xd0>)
  800213a:	f7ff ff8f 	bl	800205c <LCD_Touch_CoorX>
  800213e:	4603      	mov	r3, r0
  8002140:	80bb      	strh	r3, [r7, #4]
-		while(Almacen<6)
+  		while(Almacen<6)
  8002142:	88bb      	ldrh	r3, [r7, #4]
  8002144:	2b05      	cmp	r3, #5
  8002146:	d9f7      	bls.n	8002138 <main+0x78>
-		}
+  		}
 
-		if(Almacen>250)
+  		if(Almacen>250)
  8002148:	88bb      	ldrh	r3, [r7, #4]
  800214a:	2bfa      	cmp	r3, #250	; 0xfa
  800214c:	d90d      	bls.n	800216a <main+0xaa>
-		{
-			i++;
+  		{
+  			i++;
  800214e:	f997 3007 	ldrsb.w	r3, [r7, #7]
  8002152:	b2db      	uxtb	r3, r3
  8002154:	3301      	adds	r3, #1
  8002156:	b2db      	uxtb	r3, r3
  8002158:	71fb      	strb	r3, [r7, #7]
-			if(i>=Valor)i=0;
+  			if(i>=Valor)i=0;
  800215a:	f997 2007 	ldrsb.w	r2, [r7, #7]
  800215e:	887b      	ldrh	r3, [r7, #2]
  8002160:	429a      	cmp	r2, r3
@@ -4586,27 +4585,27 @@ int main(void)
  8002164:	2300      	movs	r3, #0
  8002166:	71fb      	strb	r3, [r7, #7]
  8002168:	e7da      	b.n	8002120 <main+0x60>
-		}else
-		{
-			i--;
+  		}else
+  		{
+  			i--;
  800216a:	f997 3007 	ldrsb.w	r3, [r7, #7]
  800216e:	b2db      	uxtb	r3, r3
  8002170:	3b01      	subs	r3, #1
  8002172:	b2db      	uxtb	r3, r3
  8002174:	71fb      	strb	r3, [r7, #7]
 
-			if(i<0)
+  			if(i<0)
  8002176:	f997 3007 	ldrsb.w	r3, [r7, #7]
  800217a:	2b00      	cmp	r3, #0
  800217c:	dad0      	bge.n	8002120 <main+0x60>
-			{
-				i=Valor-1;
+  			{
+  				i=Valor-1;
  800217e:	887b      	ldrh	r3, [r7, #2]
  8002180:	b2db      	uxtb	r3, r3
  8002182:	3b01      	subs	r3, #1
  8002184:	b2db      	uxtb	r3, r3
  8002186:	71fb      	strb	r3, [r7, #7]
-		Almacen = 0;
+  		Almacen = 0;
  8002188:	e7ca      	b.n	8002120 <main+0x60>
  800218a:	bf00      	nop
  800218c:	2000033c 	.word	0x2000033c
@@ -5158,7 +5157,7 @@ LoopFillZerobss:
   ldr   sp, =_estack      /* set stack pointer */
  8002404:	20020000 	.word	0x20020000
   ldr  r3, =_sidata
- 8002408:	08004694 	.word	0x08004694
+ 8002408:	08004684 	.word	0x08004684
   ldr  r0, =_sdata
  800240c:	20000000 	.word	0x20000000
   ldr  r3, =_edata
@@ -8036,7 +8035,7 @@ HAL_StatusTypeDef HAL_RCC_ClockConfig(RCC_ClkInitTypeDef  *RCC_ClkInitStruct, ui
  800344e:	bf00      	nop
  8003450:	40023c00 	.word	0x40023c00
  8003454:	40023800 	.word	0x40023800
- 8003458:	08004674 	.word	0x08004674
+ 8003458:	08004664 	.word	0x08004664
  800345c:	2000000c 	.word	0x2000000c
  8003460:	20000010 	.word	0x20000010
 
@@ -10744,10 +10743,10 @@ static HAL_StatusTypeDef SPI_EndRxTxTransaction(SPI_HandleTypeDef *hspi, uint32_
  80044ca:	4798      	blx	r3
  80044cc:	3501      	adds	r5, #1
  80044ce:	e7f2      	b.n	80044b6 <__libc_init_array+0x1e>
- 80044d0:	0800468c 	.word	0x0800468c
- 80044d4:	0800468c 	.word	0x0800468c
- 80044d8:	0800468c 	.word	0x0800468c
- 80044dc:	08004690 	.word	0x08004690
+ 80044d0:	0800467c 	.word	0x0800467c
+ 80044d4:	0800467c 	.word	0x0800467c
+ 80044d8:	0800467c 	.word	0x0800467c
+ 80044dc:	08004680 	.word	0x08004680
 
 080044e0 <memcpy>:
  80044e0:	b510      	push	{r4, lr}
