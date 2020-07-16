@@ -62,9 +62,9 @@ LCD_SD_Handle_it hsd;
 LCD_Touchscreen_it htch;
 
 
-char *FileSD[]={"Car.bin",
-				"City.bin",
-				"Universe.bin"
+char *FileSD[]={"Super_ciudad.bin",
+				"Super_coche.bin",
+				"Super_universo.bin"
 				};
 
 
@@ -152,6 +152,7 @@ int main(void)
 	LCD_SD_Mount(&hsd);
 	LCD_SD_Begin(&hsd);
 	Valor=sizeof(FileSD)/sizeof(FileSD[0]);
+	//Valor=sizeof(FileSD);
 
 
 	while(1)
